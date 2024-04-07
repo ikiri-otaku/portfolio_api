@@ -37,5 +37,5 @@ services:
     ports:
       - '8002:8000'
 volumes:
-  postgresql_data:
+  mysql_data:
     driver: local
