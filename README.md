@@ -59,4 +59,5 @@ Webアプリのカバレッジを測定する。これは実現難しいかも�
 誰にいいね・気になるされてるのがわかるとかもあり？  
 他サービスはこの辺有料コンテンツなので、追加オプションとして検討してみるのもアリ。  
 
-
+## ER図
+https://drive.google.com/file/d/1riEi9h1QuH-SCxI8Ja8d72sR1l3cFcY7/view?usp=sharing
