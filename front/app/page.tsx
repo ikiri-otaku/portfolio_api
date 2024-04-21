@@ -3,6 +3,7 @@ import { MantineProvider } from '@mantine/core';
 import ButtonCopy from "./components/buttons/signupButton";
 import SigninButton from "./components/buttons/signinButton";
 import Submission from "./components/buttons/submission";
+import List from './components/buttons/list';
 import theme from './components/customColor';
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
       <ButtonCopy />
       <SigninButton />
       <Submission />
+      <List />
     </MantineProvider>  
   );
 }
