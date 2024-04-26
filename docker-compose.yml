@@ -37,7 +37,7 @@ services:
     command: yarn dev -p 8000
     ports:
       - '8002:8000'
+      - '6006:6006' # Storybook
 volumes:
   mysql_data:
     driver: local
-    

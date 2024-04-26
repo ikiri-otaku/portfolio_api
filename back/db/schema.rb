@@ -19,4 +19,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_23_135034) do
     t.index ["github_username"], name: "index_organizations_on_github_username", unique: true
   end
 
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", limit: 50, null: false
+    t.string "github_username", limit: 50
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["github_username"], name: "index_users_on_github_username", unique: true
+  end
+
 end
