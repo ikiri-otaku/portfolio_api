@@ -1,0 +1,10 @@
+.right_under {
+  margin: auto 0 0 auto;
+}
+
+/* breakpoints: sm */
+@media (min-width: 48em) {
+  .separate_horizontal_over_sm {
+    margin-left: auto;
+  }
+}
