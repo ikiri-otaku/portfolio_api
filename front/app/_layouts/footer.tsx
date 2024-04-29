@@ -1,6 +1,6 @@
 import { Container, Flex, Text } from "@mantine/core";
-import { IoIosArrowDropup } from "react-icons/io";
 import styles from "./layouts.module.css"
+import ScrollToTopButton from "../_components/buttons/scrollToTopButton";
 
 export default function Footer() {
   return (
@@ -29,8 +29,7 @@ export default function Footer() {
             </div>
           </Flex>
           <div className={styles.right_under}>
-            {/* TODO: scroll up */}
-            <IoIosArrowDropup />
+            <ScrollToTopButton />
           </div>
         </Flex>
 
