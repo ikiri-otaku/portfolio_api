@@ -12,9 +12,7 @@ const config: StorybookConfig = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
-    "@storybook/addon-styling",
     '@storybook/addon-styling-webpack', // Add this line only if you are not using Vite
-    "storybook-addon-mantine",
     "storybook-dark-mode",
   ],
   features: {
