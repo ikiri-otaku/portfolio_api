@@ -88,7 +88,3 @@ Rails/I18nLocaleTexts:
 # before_actionの際の未定義メソッドのチェック（deviseとの兼ね合いで一旦false）
 Rails/LexicallyScopedActionFilter:
   Enabled: false
-
-# 空のブロックのチェック
-Lint/EmptyBlock:
-  Enabled: false
