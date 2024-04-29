@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe OrganizationUser, type: :model do
-  let(:organization) { FactoryBot.create(:organization) }
+  let(:organization) { FactoryBot.create(:organization, :with_user) }
   let(:organization_user) { organization.organization_users.first }
 
   describe '必須項目' do
@@ -22,7 +22,7 @@ RSpec.describe OrganizationUser, type: :model do
 
   describe '重複' do
     it 'organizationとuser の組み合わせが重複する場合エラーになること' do
-      another_organization_user = FactoryBot.build(:organization_user, organization: organization_user.organization, user: organization_user.user)
+      another_organization_user = OrganizationUser.new(organization:, user: organization_user.user)
       expect(another_organization_user.valid?).to be false
       expect(another_organization_user.errors[:user_id]).to eq ["has already been taken"]
     end
