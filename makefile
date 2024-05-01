@@ -27,6 +27,9 @@ g-migration:
 migrate:
 	${RUN_BACK} rails db:migrate
 
+migrate-status:
+	${RUN_BACK} rails db:migrate:status
+
 rollback:
 	${RUN_BACK} rails db:rollback STEP=1
 
