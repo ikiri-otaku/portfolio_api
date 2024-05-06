@@ -1,10 +1,10 @@
+import { DesktopIcon } from '@/app/components/icons/desktopIcon';
 import { Button } from '@mantine/core';
-import { IoDesktopOutline } from "react-icons/io5";
 
 export default function List() {
   return (
     <Button
-      leftSection={<IoDesktopOutline size={20} />}
+      leftSection={<DesktopIcon width="30px" height="30px" />}
       variant="gradient"
       gradient={{ from: 'violet.7', to: 'violet.3', deg: 70 }}
       size="md"
