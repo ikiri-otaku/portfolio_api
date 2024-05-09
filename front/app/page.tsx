@@ -1,16 +1,13 @@
-"use client";
 import { MantineProvider } from '@mantine/core';
 import List from './_components/buttons/list';
-import SigninButton from './_components/buttons/signinButton';
-import SignupButton from './_components/buttons/signupButton';
 import Submission from './_components/buttons/submission';
 import theme from './_constants/customTheme';
+import AuthButtons from './_layouts/nav/auth_buttons';
 
 export default function Home() {
   return (
     <MantineProvider theme={theme}>
-      <SignupButton />
-      <SigninButton />
+      <AuthButtons />
       <Submission />
       <List />
     </MantineProvider>

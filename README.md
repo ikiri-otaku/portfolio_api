@@ -6,6 +6,8 @@
 - `docker-compose up -d`  
 - `docker-compose exec back bin/rails db:create`  
 
+backとfrontに.envファイルを配置する
+
 ## 機能一覧
 ### 共通
 - トップページ
