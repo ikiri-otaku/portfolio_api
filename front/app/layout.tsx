@@ -5,6 +5,7 @@ import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 import Footer from "./_layouts/footer";
 import "./globals.css";
+import Header from "@/app/_layouts/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,8 +24,9 @@ export default function RootLayout({
       <head>
         <ColorSchemeScript />
       </head>
-      <body>
+      <body className="bg-bgWhite text-textBlack pt-20">
         <MantineProvider>
+          <Header />
           {children}
           <Footer />
         </MantineProvider>
