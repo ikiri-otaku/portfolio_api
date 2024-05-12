@@ -1,7 +1,14 @@
-import { Button } from '@mantine/core';
+import Link from "next/link";
 
 export default function SigninButton() {
   return (
-    <Button variant="outline" color="violet.7" size="sm" radius="xl">ログイン</Button>
+    <div className="h-10 border-2 border-main rounded-full ">
+      <Link
+        href="/signin"
+        className="h-full flex justify-center items-center font-bold text-main px-5 text-sm"
+      >
+        ログイン
+      </Link>
+    </div>
   );
 }
