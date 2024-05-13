@@ -14,6 +14,7 @@ export default function Home() {
       <SigninButton />
       <Submission />
       <List />
+      {/* @ts-expect-error Server Component */}
       <TestPostUI />
     </MantineProvider>
   );
