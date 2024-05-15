@@ -53,5 +53,16 @@ RSpec.describe Portfolio, type: :model do
         expect(portfolio.errors[:unhealthy_cnt]).to include("is not a number")
       end
     end
+  
+    describe '重複' do
+      let(:another_portfolio) { FactoryBot.build(:portfolio) }
+      it 'portfolio.url が重複する場合エラーになること' do
+        portfolio.save
+        expect(another_portfolio.valid?).to be true
+        another_portfolio.url = portfolio.url
+        expect(another_portfolio.valid?).to be false
+        expect(another_portfolio.errors[:url]).to eq ["has already been taken"]
+      end
+    end
   end
 end
