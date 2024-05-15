@@ -1,4 +1,4 @@
-Test_post.create!(
+TestPost.create!(
   [
     { title: 'Ruby' },
     { title: 'Rails' },
