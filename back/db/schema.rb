@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_26_132105) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_13_144642) do
   create_table "organization_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.bigint "user_id", null: false
@@ -29,6 +29,26 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_26_132105) do
     t.index ["github_username"], name: "index_organizations_on_github_username", unique: true
   end
 
+  create_table "portfolios", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "organization_id"
+    t.string "name", limit: 50, null: false
+    t.string "url", null: false
+    t.text "introduction"
+    t.integer "unhealthy_cnt", limit: 1, default: 0
+    t.datetime "latest_health_check_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_portfolios_on_organization_id"
+    t.index ["user_id"], name: "index_portfolios_on_user_id"
+  end
+
+  create_table "test_posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 50, null: false
     t.string "github_username", limit: 50
@@ -39,4 +59,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_26_132105) do
 
   add_foreign_key "organization_users", "organizations"
   add_foreign_key "organization_users", "users"
+  add_foreign_key "portfolios", "organizations"
+  add_foreign_key "portfolios", "users"
 end
