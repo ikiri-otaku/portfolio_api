@@ -55,6 +55,6 @@ RSpec.describe Portfolio, type: :model do
         expect(portfolio.valid?).to be false
         expect(portfolio.errors[:unhealthy_cnt]).to include("is not a number")
       end
-    end  
+    end
   end
 end

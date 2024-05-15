@@ -6,7 +6,6 @@ FactoryBot.define do
     unhealthy_cnt { 0 }
     latest_health_check_time { Time.now }
 
-    # organizationが必要な場合
     association :user
     association :organization
 
