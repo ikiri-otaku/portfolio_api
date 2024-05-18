@@ -40,7 +40,7 @@ const theme = createTheme({
       "#c44c00",
     ],
     silver: [
-      "#f7f7f7", // NOTE: bg_color
+      "#f2f2f2",
       "#e7e7e7",
       "#d7d7d7",
       "#C9C9C9", // NOTE: secondRank
