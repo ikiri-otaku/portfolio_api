@@ -2,11 +2,16 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "http://localhost:8002"
+    if Rails.env.development?
+      origins "http://localhost:8002"
+    else
+      # TODO: 本番環境
+      origins "http://localhost:800"
+    end
 
     resource "*",
-             headers: :any,
-             methods: [:get, :post, :put, :patch, :delete, :options, :head],
-             expose: ['access-token', 'expiry', 'token-type', 'uid', 'client']
+      headers: :any,
+      methods: %i[get post put patch delete options head],
+      expose: %w[access-token expiry token-type uid client]
   end
 end
