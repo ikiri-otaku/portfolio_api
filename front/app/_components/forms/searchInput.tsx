@@ -3,7 +3,7 @@ import { SearchIcon } from "@/app/_components/icons/searchIcon";
 import { TextInput } from "@mantine/core";
 import classes from "./searchForm.module.css";
 
-export default function SearchForm() {
+export default function SearchInput() {
   return (
     <TextInput
       radius="xl"
