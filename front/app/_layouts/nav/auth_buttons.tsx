@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function SigninButton() {
+export default function AuthButtons() {
   return (
     <div className="h-10 border-2 border-main rounded-full ">
       <Link

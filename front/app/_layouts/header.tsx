@@ -1,7 +1,7 @@
-import SigninButton from "@/app/_components/buttons/signinButton";
 import SignupButton from "@/app/_components/buttons/signupButton";
 import SearchForm from "@/app/_components/forms/searchForm";
 import HeaderNavigation from "@/app/_layouts/headerNavigation";
+import AuthButtons from "@/app/_layouts/nav/auth_buttons";
 import { Container, Flex } from "@mantine/core";
 import Link from "next/link";
 
@@ -20,7 +20,7 @@ export default function Header() {
           <Flex align="center" ml="auto" gap="24px">
             <HeaderNavigation />
             <Flex align="center" gap="18px">
-              <SigninButton />
+              <AuthButtons />
               <SignupButton />
             </Flex>
           </Flex>
