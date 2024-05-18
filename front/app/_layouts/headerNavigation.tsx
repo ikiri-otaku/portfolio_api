@@ -6,11 +6,6 @@ import Link from "next/link";
 export default function HeaderNavigation() {
   const navigation = [
     {
-      name: "トップ",
-      href: "/",
-      icon: HomeIcon,
-    },
-    {
       name: "アプリ投稿",
       // TODO: Link設定
       href: "/",
@@ -29,7 +24,10 @@ export default function HeaderNavigation() {
       <ul className="flex items-center gap-x-6">
         {navigation.map((item, index) => (
           <li key={index}>
-            <Link href={item.href} className="flex items-center gap-x-2 font-bold">
+            <Link
+              href={item.href}
+              className="flex items-center gap-x-2 font-bold"
+            >
               <item.icon width="20px" height="20px" stroke="#171717" />
               {item.name}
             </Link>
