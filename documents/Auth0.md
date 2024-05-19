@@ -28,7 +28,9 @@ cf: https://auth0.com/signup/?utm_source=devcenter&utm_medium=auth0&utm_campaign
 - AUTH0_CLIENT_SECRET=（Client Secretを記載）
 
 ## ユニバーサルログインの設定
-GitHubに遷移させてるので不要かも  
+<details>
+<summary>GitHubに遷移させてるので不要かも  </summary>
+
   
 遷移
 - Branding -> Universal Login -> Advanced Options
@@ -52,6 +54,48 @@ GitHubに遷移させてるので不要かも
 <img src="https://i.gyazo.com/33f7a8646cd5d4b7289c8220a77adaba.png" width="200px">
 
 Advanced Optionsから直接HTMLを編集することもできそう
+</details>  
+  
+
+## バックエンドの設定
+### Auth0 audience の設定
+遷移
+- Applications -> APIs
+- Create API
+
+設定
+- Name: Rails
+- Identifier: バックエンドのURL
+- Signing Algorithm: RS256 (default)
+
+### TENANT DOMAIN の確認
+遷移
+- Settings -> Custom Domains
+
+文章中の `dev-xxx.jp.auth0.com` を取得
+
+### back/.env の設定
+- PORT=4000（バックエンドのポート番号）
+- CLIENT_ORIGIN_URL=http://localhost:8002（フロントのURL）
+- AUTH0_AUDIENCE=http://localhost:4000（Auth0 audience の設定でIdentifierに設定した値）
+- AUTH0_DOMAIN=dev-xxx.jp.auth0.com（TENANT DOMAIN）
+
+### front/.envの設定
+- AUTH0_AUDIENCE=http://localhost:4000（Auth0 audience の設定でIdentifierに設定した値）
+
+### アクセストークンの確認
+遷移
+- Applications -> APIs -> Rails -> Test
+
+`Response` のスニペット右上のボタンからコピーし、アクセストークンを入手する
+
+### 認証付きコントローラの動作確認
+```
+curl --request GET \
+  --url http://localhost:4000/auth/test_messages/protected \
+  --header 'authorization: Bearer アクセストークン
+```
+
 
 
 # （参考）無料枠の範囲
