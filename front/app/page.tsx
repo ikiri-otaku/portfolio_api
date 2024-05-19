@@ -3,7 +3,7 @@ import List from './_components/buttons/list';
 import Submission from './_components/buttons/submission';
 import theme from './_constants/customTheme';
 import AuthButtons from './_layouts/nav/auth_buttons';
-import TestPostUI from './_services/testPost';
+import TestPostUI from '@/app/_components/test/testPosts';
 
 export default function Home() {
 
@@ -12,7 +12,6 @@ export default function Home() {
       <AuthButtons />
       <Submission />
       <List />
-      {/* @ts-expect-error Server Component */}
       <TestPostUI />
     </MantineProvider>
   );
