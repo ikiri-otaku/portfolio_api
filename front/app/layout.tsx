@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
+import "./globals.css";
 import '@mantine/core/styles.css';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
@@ -24,10 +26,12 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider>
-          {children}
-          <Footer />
-        </MantineProvider>
+        <UserProvider>
+          <MantineProvider>
+            {children}
+            <Footer />
+          </MantineProvider>
+        </UserProvider>
       </body>
     </html>
   );
