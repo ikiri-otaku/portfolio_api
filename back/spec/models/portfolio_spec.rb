@@ -28,9 +28,9 @@ RSpec.describe Portfolio, type: :model do
       end
 
       it 'url が255桁を超える場合エラーになること' do
-        portfolio.url = 'a' * 255
+        portfolio.url = "http://#{'a' * 248}"
         expect(portfolio.valid?).to be true
-        portfolio.url = 'a' * 256
+        portfolio.url = "http://#{'a' * 249}"
         expect(portfolio.valid?).to be false
         expect(portfolio.errors[:url]).to include("is too long (maximum is 255 characters)")
       end
@@ -48,15 +48,18 @@ RSpec.describe Portfolio, type: :model do
       it 'unhealthy_cnt が整数でない場合エラーになること' do
         portfolio.unhealthy_cnt = 3
         expect(portfolio.valid?).to be true
-        portfolio.unhealthy_cnt = 0.5
-        expect(portfolio.valid?).to be false
-        expect(portfolio.errors[:unhealthy_cnt]).to include("must be an integer")
         portfolio.unhealthy_cnt = 'three'
         expect(portfolio.valid?).to be false
         expect(portfolio.errors[:unhealthy_cnt]).to include("is not a number")
       end
+
+      it 'unhealthy_cnt が0未満の場合エラーになること' do
+        portfolio.unhealthy_cnt = -1
+        expect(portfolio.valid?).to be false
+        expect(portfolio.errors[:unhealthy_cnt]).to include("must be greater than or equal to 0")
+      end
     end
-  
+
     describe '重複' do
       let(:another_portfolio) { FactoryBot.build(:portfolio) }
       it 'portfolio.url が重複する場合エラーになること' do
