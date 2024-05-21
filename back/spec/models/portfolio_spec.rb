@@ -48,6 +48,9 @@ RSpec.describe Portfolio, type: :model do
       it 'unhealthy_cnt が整数でない場合エラーになること' do
         portfolio.unhealthy_cnt = 3
         expect(portfolio.valid?).to be true
+        portfolio.unhealthy_cnt = 0.5
+        expect(portfolio.valid?).to be false
+        expect(portfolio.errors[:unhealthy_cnt]).to include("must be an integer")
         portfolio.unhealthy_cnt = 'three'
         expect(portfolio.valid?).to be false
         expect(portfolio.errors[:unhealthy_cnt]).to include("is not a number")

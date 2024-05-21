@@ -5,11 +5,11 @@ FactoryBot.define do
     sequence :url, 'url_1'
     introduction { "This is a sample portfolio introduction." }
     unhealthy_cnt { 0 }
-    latest_health_check_time { Time.now }
+    latest_health_check_time { Time.current }
 
-    trait :with_user do
+    trait :with_organization do
       after(:create) do |portfolio|
-        portfolio.users << FactoryBot.create(:user)
+        portfolio.organization = FactoryBot.create(:organization, user: portfolio.user)
       end
     end
   end
