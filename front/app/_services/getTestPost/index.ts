@@ -1,3 +1,4 @@
+import 'server-only'
 import { handleFailed, handleSucceed, path } from "@/app/_services";
 import { TestPost } from "@/app/_types/testPost";
 
