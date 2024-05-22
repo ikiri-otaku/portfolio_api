@@ -1,7 +1,6 @@
 class Portfolio < ApplicationRecord
   belongs_to :user
   belongs_to :organization, class_name: 'Portfolio', optional: true
-  validates :organization, presence: true, if: :organization_id?
   validates :name, presence: true, length: { maximum: 50 }
   validates :url, presence: true,
     length: { maximum: 255 },
