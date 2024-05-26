@@ -28,6 +28,9 @@ const config: Config = {
         inputBorder: "#9B80BF",
         warning: "#F03E3E",
       },
+      boxShadow: {
+        card: '0px 0px 15px 0px rgba(0, 0, 0, 0.03),0px 2px 30px 0px rgba(0, 0, 0, 0.08),0px 0px 0px 0px rgba(0, 0, 0, 0.30)',
+      },
     },
   },
   plugins: [],

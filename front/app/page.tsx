@@ -4,6 +4,7 @@ import Submission from './_components/buttons/submission';
 import theme from './_constants/customTheme';
 import AuthButtons from './_layouts/nav/auth_buttons';
 import TestPostUI from './_services/testPost';
+import PortfolioCards from '@/app/_components/portfolioCard/portfolioCards';
 
 export default function Home() {
   return (
@@ -24,6 +25,10 @@ export default function Home() {
           キャッチコピーキャッチコピーキャッチコピーキャッチコピキャッチコピーキャッチコピー
         </p>
         <Submission />
+      </section>
+      <section className="mx-auto w-11/12">
+        <h3 className="text-xl font-bold text-textBlack">Viewランキング</h3>
+        <PortfolioCards />
       </section>
     </MantineProvider>
   );
