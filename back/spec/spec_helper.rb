@@ -11,7 +11,27 @@
 # a separate helper file that requires the additional dependencies and performs
 # the additional setup, and require it from the spec files that actually need
 # it.
-#
+require 'simplecov'
+
+SimpleCov.start do
+  track_files '**/*.rb'
+
+  # 除外ディレクトリ
+  add_filter '/bin/'
+  add_filter '/config/'
+  add_filter '/db/'
+  add_filter '/spec/'
+
+  add_group 'Controllers', 'app/controllers'
+  add_group 'Jobs', 'app/jobs'
+  add_group 'Libs', 'app/lib'
+  add_group 'Mailers', 'app/mailers'
+  add_group 'Models', 'app/models'
+
+  # 行内の分岐カバレッジも取得
+  enable_coverage :branch
+end
+
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
