@@ -2,6 +2,10 @@ development:
   domain: <%= ENV.fetch('AUTH0_DOMAIN') %>
   audience: <%= ENV.fetch('AUTH0_AUDIENCE') %>
 
+test:
+  domain: auth0.example.com
+  audience: <%= ENV.fetch('AUTH0_AUDIENCE') %>
+
 production:
   domain: <%= ENV.fetch('AUTH0_DOMAIN') %>
   audience: <%= ENV.fetch('AUTH0_AUDIENCE') %>

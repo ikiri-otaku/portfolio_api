@@ -5,6 +5,9 @@ class Auth::UsersController < Auth::ApplicationController
 
     user.save!
     render status: :ok
+  rescue ActiveRecord::RecordInvalid => e
+    Rails.logger.error "UserCreateFailed: #{user.errors.full_messages}"
+    raise e
   end
 
   # TODO: 退会
