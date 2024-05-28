@@ -71,4 +71,41 @@ RSpec.describe Portfolio, type: :model do
       end
     end
   end
+
+  describe 'アソシエーション' do
+    it 'userに属していること' do
+      portfolio = FactoryBot.create(:portfolio)
+      expect(portfolio.user).to be_present
+    end
+
+    it 'organizationが任意であること' do
+      portfolio_without_org = FactoryBot.create(:portfolio)
+      portfolio_with_org = FactoryBot.create(:portfolio, :with_organization)
+      expect(portfolio_without_org.organization).to be_nil
+      expect(portfolio_with_org.organization).to be_present
+    end
+
+    it 'userを削除すると、関連するportfolioも削除されること' do
+      user = FactoryBot.create(:user)
+      portfolio = FactoryBot.create(:portfolio, user: user)
+      expect { user.destroy }.to change { Portfolio.count }.by(-1)
+    end
+
+    it 'organizationが存在する場合、portfolioを削除できないこと' do
+      portfolio = FactoryBot.create(:portfolio, :with_organization)
+      expect { portfolio.destroy }.to_not change { Portfolio.count }
+    end
+  end
+
+  describe '依存関係チェック' do
+    it 'organizationが存在する場合、削除が中止されること' do
+      portfolio = FactoryBot.create(:portfolio, :with_organization)
+      expect(portfolio.destroy).to be false
+    end
+
+    it 'organizationが存在しない場合、削除が成功すること' do
+      portfolio = FactoryBot.create(:portfolio)
+      expect(portfolio.destroy).to be_truthy
+    end
+  end
 end
