@@ -31,7 +31,7 @@ cf: https://auth0.com/signup/?utm_source=devcenter&utm_medium=auth0&utm_campaign
 <details>
 <summary>GitHubに遷移させてるので不要かも  </summary>
 
-  
+
 遷移
 - Branding -> Universal Login -> Advanced Options
 
@@ -39,8 +39,8 @@ cf: https://auth0.com/signup/?utm_source=devcenter&utm_medium=auth0&utm_campaign
 - Universal Login Experience: New
 - Save Changes
 
-### （参考）ログイン画面のカスタマイズ  
-  
+### （参考）ログイン画面のカスタマイズ
+
 遷移
 - Branding -> Universal Login -> Customization Options
 
@@ -54,8 +54,8 @@ cf: https://auth0.com/signup/?utm_source=devcenter&utm_medium=auth0&utm_campaign
 <img src="https://i.gyazo.com/33f7a8646cd5d4b7289c8220a77adaba.png" width="200px">
 
 Advanced Optionsから直接HTMLを編集することもできそう
-</details>  
-  
+</details>
+
 
 ## バックエンドの設定
 ### Auth0 audience の設定
