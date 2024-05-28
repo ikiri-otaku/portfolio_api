@@ -8,6 +8,11 @@ Rails.application.routes.draw do
   # 認証が必要なルーティングはここ
   namespace :auth do
     resource :user, only: %i[create destroy]
+    resource :test_messages, only: [] do
+      get 'protected'
+      get 'public'
+      get 'admin'
+    end
   end
 
   # 認証が不要なルーティングはここ

@@ -70,6 +70,7 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
   config.hosts = [
     "portfolio_api-back-1:3000", # Windows
-    "back:3000" # Mac
+    "back:3000", # Mac
+    "localhost" # ブラウザ
   ]
 end
