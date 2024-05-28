@@ -87,13 +87,14 @@ RSpec.describe Portfolio, type: :model do
 
     it 'userを削除すると、関連するportfolioも削除されること' do
       user = FactoryBot.create(:user)
-      portfolio = FactoryBot.create(:portfolio, user: user)
-      expect { user.destroy }.to change { Portfolio.count }.by(-1)
+      portfolio = FactoryBot.create(:portfolio, user:)
+      user.destroy
+      expect(Portfolio.exists?(portfolio.id)).to be false
     end
 
     it 'organizationが存在する場合、portfolioを削除できないこと' do
       portfolio = FactoryBot.create(:portfolio, :with_organization)
-      expect { portfolio.destroy }.to_not change { Portfolio.count }
+      expect { portfolio.destroy }.to_not(change { Portfolio.count })
     end
   end
 
