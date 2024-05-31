@@ -9,7 +9,9 @@ FactoryBot.define do
 
     trait :with_organization do
       after(:create) do |portfolio|
-        portfolio.organization = FactoryBot.create(:organization)
+        organization = FactoryBot.create(:organization)
+        portfolio.user.organizations << organization
+        portfolio.organization = organization
         portfolio.save
       end
     end
