@@ -8,8 +8,7 @@ import Header from '@/app/_layouts/header';
 
 export default function Home() {
   return (
-    <MantineProvider theme={theme}>
-      <Header />
+    <MantineProvider>
       <AuthButtons />
       <List />
       {/* @ts-expect-error Server Component */}
