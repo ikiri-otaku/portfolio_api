@@ -1,14 +1,23 @@
-import Link from "next/link";
+"use client";
+
+import VioletLinkButton from "@/app/_components/buttons/violetLinkButton";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 export default function AuthButtons() {
+  const { user, isLoading } = useUser();
+
+  if (isLoading) {
+    return (<></>) // TODO: ローディング中の表示
+  }
+
   return (
-    <div className="h-10 border-2 border-main rounded-full ">
-      <Link
-        href="/signin"
-        className="h-full flex justify-center items-center font-bold text-main px-5 text-sm"
-      >
-        ログイン
-      </Link>
-    </div>
+    <>
+      {user && (
+        <VioletLinkButton variant='outline' label='ログアウト' href='/api/auth/logout' />
+      )}
+      {!user && (
+        <VioletLinkButton variant='outline' label='ログイン' href='/api/auth/login' />
+      )}
+    </>
   );
 }
