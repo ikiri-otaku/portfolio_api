@@ -7,6 +7,7 @@ import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 import Footer from "./_layouts/footer";
 import "./globals.css";
+import Header from "@/app/_layouts/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
