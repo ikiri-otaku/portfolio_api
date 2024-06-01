@@ -1,5 +1,6 @@
 .input {
   border-color: var(--search-border-color) !important;
+  background-color: var(--bg-color) !important;
   &:focus-within {
     outline: 1px solid #9b80bf !important;
     border-color: transparent !important;
