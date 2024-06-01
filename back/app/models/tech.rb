@@ -1,4 +1,6 @@
 class Tech < ApplicationRecord
+  include Discard::Model
+
   belongs_to :parent, class_name: "Tech", optional: true
   has_many :children, class_name: "Tech", foreign_key: "parent_id", dependent: :nullify
 

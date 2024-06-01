@@ -52,6 +52,7 @@ group :test do
   gem 'simplecov', require: false
 end
 
+gem 'discard', '~> 1.2'
 gem 'jwt', '~> 2.5'
 gem 'rubocop', require: false
 gem 'rubocop-performance', require: false
