@@ -71,8 +71,8 @@ Style/SingleLineBlockParams:
   Enabled: false
 
 # 文字列のダブルクォートチェック
-# Style/StringLiterals:
-#   Enabled: false
+Style/StringLiterals:
+  Enabled: true
 
 # シンボルによる配列の%記法のチェック
 Style/SymbolArray:

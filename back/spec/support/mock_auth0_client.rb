@@ -6,11 +6,11 @@ module MockAuth0Client
   @@jwks_response_body = { # rubocop:disable Style/ClassVars
     keys: [
       {
-        kty: "RSA",
-        kid: "testkid1",
-        use: "sig",
-        n: "example",
-        e: "AQAB"
+        kty: 'RSA',
+        kid: 'testkid1',
+        use: 'sig',
+        n: 'example',
+        e: 'AQAB'
       }
     ]
   }.to_json

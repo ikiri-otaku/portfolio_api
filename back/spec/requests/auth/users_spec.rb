@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe "Auth::Users", type: :request do
+RSpec.describe 'Auth::Users', type: :request do
   let(:token) { 'valid_jwt_token' }
   let(:headers) { { Authorization: "Bearer #{token}" } }
 
-  describe "POST   /auth/user" do
+  describe 'POST   /auth/user' do
     context '不正なアクセストークンの場合' do
-      it "404を返す" do
+      it '404を返す' do
         mock_auth_invlid
 
         post auth_user_path, headers:, params: {}
@@ -15,7 +15,7 @@ RSpec.describe "Auth::Users", type: :request do
     end
 
     context '正統なアクセスの場合' do
-      it "ユーザ作成済の場合、ユーザを作成せず200を返す" do
+      it 'ユーザ作成済の場合、ユーザを作成せず200を返す' do
         user = FactoryBot.create(:user)
         mock_auth(token:, auth0_id: user.auth0_id)
 
@@ -24,7 +24,7 @@ RSpec.describe "Auth::Users", type: :request do
         expect(User.count).to eq 1
       end
 
-      it "ユーザ未作成の場合、ユーザを作成して200を返す" do
+      it 'ユーザ未作成の場合、ユーザを作成して200を返す' do
         mock_auth
         post auth_user_path, headers:, params: { user: { name: 'name', github_username: 'github_username', auth0_id: 'auth0_id' } }
 
@@ -36,7 +36,7 @@ RSpec.describe "Auth::Users", type: :request do
         expect(user.auth0_id).to eq 'auth0_id'
       end
 
-      it "ユーザ作成が失敗した場合、500を返す" do
+      it 'ユーザ作成が失敗した場合、500を返す' do
         allow(Rails.logger).to receive(:error)
         mock_auth
 
@@ -49,5 +49,5 @@ RSpec.describe "Auth::Users", type: :request do
     end
   end
 
-  # TODO: describe "DELETE /auth/user"
+  # TODO: describe 'DELETE /auth/user'
 end
