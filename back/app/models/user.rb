@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  after_destroy :destroy_organizations_if_no_users
+  before_destroy :check_organizations
 
   has_many :organization_users, dependent: :destroy
   has_many :organizations, through: :organization_users
@@ -9,9 +9,13 @@ class User < ApplicationRecord
 
   private
 
-  def destroy_organizations_if_no_users
+  def check_organizations
     organizations.each do |organization|
-      organization.destroy if organization.users.reload.empty?
+      if organization.users.where.not(id: id).exists?
+        organization_users.where(organization: organization).destroy_all
+      else
+        organization.destroy
+      end
     end
   end
 end

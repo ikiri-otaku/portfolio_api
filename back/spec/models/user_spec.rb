@@ -53,9 +53,6 @@ RSpec.describe User, type: :model do
       user1.organizations << organization
       user2.organizations << organization
 
-      FactoryBot.create(:portfolio, user: user1, organization: organization)
-      FactoryBot.create(:portfolio, user: user2, organization: organization)
-
       user1.destroy
       user2.destroy
 
@@ -68,9 +65,6 @@ RSpec.describe User, type: :model do
       user2 = FactoryBot.create(:user)
       user1.organizations << organization
       user2.organizations << organization
-
-      FactoryBot.create(:portfolio, user: user1, organization: organization)
-      FactoryBot.create(:portfolio, user: user2, organization: organization)
 
       user1.destroy
 
