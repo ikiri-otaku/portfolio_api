@@ -1,7 +1,5 @@
-import theme from '@/app/_constants/customTheme';
 import Header from '@/app/_layouts/header';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
-import { MantineProvider } from '@mantine/core';
 import { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Header> = {
