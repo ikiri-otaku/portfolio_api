@@ -11,9 +11,7 @@ const meta: Meta<typeof Header> = {
   decorators: [
     (Story) => (
       <UserProvider>
-        <MantineProvider theme={theme}>
-          <Story />
-        </MantineProvider>
+        <Story />
       </UserProvider>
     ),
   ],
