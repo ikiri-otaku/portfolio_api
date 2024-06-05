@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe "Auth::Application", type: :request do
+RSpec.describe 'Auth::Application', type: :request do
   include MockAuth0Client
 
-  describe "#authorize" do
+  describe '#authorize' do
     let(:token) { 'valid_jwt_token' }
     let(:headers) { { Authorization: "Bearer #{token}" } }
 

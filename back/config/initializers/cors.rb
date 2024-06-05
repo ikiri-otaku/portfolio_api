@@ -3,13 +3,13 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     if Rails.env.development?
-      origins "http://localhost:8002"
+      origins 'http://localhost:8002'
     else
       # TODO: 本番環境
-      origins "http://localhost:800"
+      origins 'http://localhost:800'
     end
 
-    resource "*",
+    resource '*',
       headers: :any,
       methods: %i[get post put patch delete options head],
       expose: %w[access-token expiry token-type uid client]
