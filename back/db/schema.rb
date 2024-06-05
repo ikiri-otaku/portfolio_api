@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_01_031907) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_01_053542) do
   create_table "organization_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.bigint "user_id", null: false
@@ -45,6 +45,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_01_031907) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_teches", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "tech_id", null: false
+    t.integer "exp_months_job", limit: 1
+    t.integer "exp_months_hobby", limit: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tech_id"], name: "index_user_teches_on_tech_id"
+    t.index ["user_id", "tech_id"], name: "index_user_teches_on_user_id_and_tech_id", unique: true
+    t.index ["user_id"], name: "index_user_teches_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 50, null: false
     t.string "github_username", limit: 50
@@ -57,4 +69,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_01_031907) do
   add_foreign_key "organization_users", "organizations"
   add_foreign_key "organization_users", "users"
   add_foreign_key "teches", "teches", column: "parent_id"
+  add_foreign_key "user_teches", "teches"
+  add_foreign_key "user_teches", "users"
 end
