@@ -37,16 +37,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_14_154557) do
     t.boolean "hireable", default: true, null: false
     t.string "work_location"
     t.string "x_username", limit: 50
-    t.string "zenn_url"
-    t.string "qiita_url"
+    t.string "zenn_username", limit: 50
+    t.string "qiita_username", limit: 50
     t.string "atcoder_username", limit: 50
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["atcoder_username"], name: "index_profiles_on_atcoder_username", unique: true
-    t.index ["qiita_url"], name: "index_profiles_on_qiita_url", unique: true
+    t.index ["qiita_username"], name: "index_profiles_on_qiita_username", unique: true
     t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
     t.index ["x_username"], name: "index_profiles_on_x_username", unique: true
-    t.index ["zenn_url"], name: "index_profiles_on_zenn_url", unique: true
+    t.index ["zenn_username"], name: "index_profiles_on_zenn_username", unique: true
   end
 
   create_table "test_posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
