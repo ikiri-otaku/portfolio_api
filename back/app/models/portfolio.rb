@@ -1,7 +1,7 @@
 class Portfolio < ApplicationRecord
   before_destroy :check_user_dependency
 
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :organization, optional: true
 
   validates :name, presence: true, length: { maximum: 50 }
