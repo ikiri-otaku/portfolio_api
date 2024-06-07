@@ -7,5 +7,9 @@ FactoryBot.define do
         FactoryBot.create(:tech, parent:)
       end
     end
+
+    trait :discarded do
+      discarded_at { Time.current }
+    end
   end
 end

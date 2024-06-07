@@ -21,7 +21,7 @@ RSpec.describe Tech, type: :model do
         expect(tech.valid?).to be true
         tech.name = 'a' * 21
         expect(tech.valid?).to be false
-        expect(tech.errors[:name]).to eq ["is too long (maximum is 20 characters)"]
+        expect(tech.errors[:name]).to eq ['is too long (maximum is 20 characters)']
       end
     end
 

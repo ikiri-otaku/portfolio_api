@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
 
   # 認証が不要なルーティングはここ
+  resources :teches, only: %i[index]
   resources :test_posts, only: %i[index]
   # Defines the root path route ('/')
   # root 'posts#index'
