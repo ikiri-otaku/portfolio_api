@@ -1,4 +1,4 @@
-import { PlusIcon } from '@/app/components/icons/plusIcon copy';
+import { PlusIcon } from '@/app/_components/icons/plusIcon';
 import { Button } from '@mantine/core';
 
 export default function Submission() {

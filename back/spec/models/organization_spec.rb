@@ -21,14 +21,14 @@ RSpec.describe Organization, type: :model do
         expect(organization.valid?).to be true
         organization.name = 'a' * 51
         expect(organization.valid?).to be false
-        expect(organization.errors[:name]).to eq ["is too long (maximum is 50 characters)"]
+        expect(organization.errors[:name]).to eq ['is too long (maximum is 50 characters)']
       end
       it 'github_username が50桁を超える場合エラーになること' do
         organization.github_username = 'a' * 50
         expect(organization.valid?).to be true
         organization.github_username = 'a' * 51
         expect(organization.valid?).to be false
-        expect(organization.errors[:github_username]).to eq ["is too long (maximum is 50 characters)"]
+        expect(organization.errors[:github_username]).to eq ['is too long (maximum is 50 characters)']
       end
     end
 
@@ -40,7 +40,7 @@ RSpec.describe Organization, type: :model do
 
         another_organization.github_username = organization.github_username
         expect(another_organization.valid?).to be false
-        expect(another_organization.errors[:github_username]).to eq ["has already been taken"]
+        expect(another_organization.errors[:github_username]).to eq ['has already been taken']
       end
     end
 
