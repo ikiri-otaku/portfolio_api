@@ -3,6 +3,8 @@ class Portfolio < ApplicationRecord
 
   belongs_to :user, optional: true
   belongs_to :organization, optional: true
+  has_many :portfolio_teches, dependent: :destroy
+  has_many :teches, through: :portfolio_teches
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :url, presence: true,
