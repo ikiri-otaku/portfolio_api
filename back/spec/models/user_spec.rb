@@ -21,14 +21,14 @@ RSpec.describe User, type: :model do
         expect(user.valid?).to be true
         user.name = 'a' * 51
         expect(user.valid?).to be false
-        expect(user.errors[:name]).to eq ["is too long (maximum is 50 characters)"]
+        expect(user.errors[:name]).to eq ['is too long (maximum is 50 characters)']
       end
       it 'github_username が50桁を超える場合エラーになること' do
         user.github_username = 'a' * 50
         expect(user.valid?).to be true
         user.github_username = 'a' * 51
         expect(user.valid?).to be false
-        expect(user.errors[:github_username]).to eq ["is too long (maximum is 50 characters)"]
+        expect(user.errors[:github_username]).to eq ['is too long (maximum is 50 characters)']
       end
     end
 
@@ -40,7 +40,7 @@ RSpec.describe User, type: :model do
 
         another_user.github_username = user.github_username
         expect(another_user.valid?).to be false
-        expect(another_user.errors[:github_username]).to eq ["has already been taken"]
+        expect(another_user.errors[:github_username]).to eq ['has already been taken']
       end
     end
   end
