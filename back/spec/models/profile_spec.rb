@@ -5,6 +5,27 @@ RSpec.describe Profile, type: :model do
     let(:profile) { FactoryBot.build(:profile) }
 
     describe 'サイズ' do
+      it 'location が255桁を超える場合エラーになること' do
+        profile.location = 'a' * 255
+        expect(profile.valid?).to be true
+        profile.location = 'a' * 256
+        expect(profile.valid?).to be false
+        expect(profile.errors[:location]).to eq ['is too long (maximum is 255 characters)']
+      end
+      it 'company が255桁を超える場合エラーになること' do
+        profile.company = 'a' * 255
+        expect(profile.valid?).to be true
+        profile.company = 'a' * 256
+        expect(profile.valid?).to be false
+        expect(profile.errors[:company]).to eq ['is too long (maximum is 255 characters)']
+      end
+      it 'work_location が255桁を超える場合エラーになること' do
+        profile.work_location = 'a' * 255
+        expect(profile.valid?).to be true
+        profile.work_location = 'a' * 256
+        expect(profile.valid?).to be false
+        expect(profile.errors[:work_location]).to eq ['is too long (maximum is 255 characters)']
+      end
       it 'x_username が50桁を超える場合エラーになること' do
         profile.x_username = 'a' * 50
         expect(profile.valid?).to be true
