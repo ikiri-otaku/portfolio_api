@@ -16,13 +16,9 @@ class Auth::PortfoliosController < Auth::ApplicationController
     render status: :created
   end
 
-  def update
+  def update; end # TODO
 
-  end
-
-  def destroy
-
-  end
+  def destroy; end # TODO
 
   private
 
@@ -31,7 +27,7 @@ class Auth::PortfoliosController < Auth::ApplicationController
       :name,
       :url,
       :introduction,
-      :github_url # TODO GithubRepository
+      :github_url # TODO: GithubRepository
       # :tech_names TODO
     )
   end

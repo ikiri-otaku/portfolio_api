@@ -5,7 +5,7 @@ class GithubClient
   class Error < StandardError; end
 
   def initialize
-    @client = Octokit::Client.new(access_token: ENV['GITHUB_TOKEN'])
+    @client = Octokit::Client.new(access_token: ENV.fetch('GITHUB_TOKEN', nil))
   end
 
   # def get_repo_stars(owner, repo)

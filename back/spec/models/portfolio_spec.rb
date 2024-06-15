@@ -116,7 +116,7 @@ RSpec.describe Portfolio, type: :model do
         end
         it '未登録のチームのリポジトリの場合、チームとポートフォリオを新規登録する' do
           portfolio_unsave.user = user_no_org
-          portfolio_unsave.github_url = "https://example.github.com/organization_new/repo"
+          portfolio_unsave.github_url = 'https://example.github.com/organization_new/repo'
           expect(user_no_org.organizations.count).to eq 0
 
           portfolio_unsave.save_associations!
@@ -158,12 +158,13 @@ RSpec.describe Portfolio, type: :model do
           allow_any_instance_of(Portfolio).to receive(:save!).and_raise(ActiveRecord::RecordInvalid)
 
           portfolio_unsave.user = user_no_org
-          portfolio_unsave.github_url = "https://example.github.com/organization_new/repo"
+          portfolio_unsave.github_url = 'https://example.github.com/organization_new/repo'
           expect(Organization.count).to eq 0
           expect(Portfolio.count).to eq 0
           begin
             portfolio_unsave.save_associations!
           rescue ActiveRecord::RecordInvalid
+            nil
           end
 
           expect(Organization.count).to eq 0

@@ -38,17 +38,13 @@ class Portfolio < ApplicationRecord
   def save_associations!
     repo_info = GithubClient.get_owner_and_repo(github_url)
     ActiveRecord::Base.transaction do
-      if new_record? # TODO: GitHubのURLを後から登録できるようにする、変更は不可
-        if repo_info && user.github_username != repo_info[0]
-          # Organization作成
-          self.organization = Organization.find_by(github_username: repo_info[0]) || Organization.new(name: repo_info[0], github_username: repo_info[0])
-          user.organizations << self.organization unless user.organizations.include?(self.organization)
-        end
-        # GithubRepository作成
-        # TODO
+      if new_record? && (repo_info && user.github_username != repo_info[0])
+        # Organization作成
+        self.organization = Organization.find_by(github_username: repo_info[0]) || Organization.new(name: repo_info[0], github_username: repo_info[0])
+        user.organizations << organization unless user.organizations.include?(organization)
       end
-      # PortfolioTech保存
-      # TODO
+      # TODO: GithubRepository作成
+      # TODO: PortfolioTech保存
       save!
     end
   end

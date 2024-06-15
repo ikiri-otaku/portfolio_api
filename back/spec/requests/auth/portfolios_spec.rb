@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Auth::Portfolios", type: :request do
+RSpec.describe 'Auth::Portfolios', type: :request do
   let(:token) { 'valid_jwt_token' }
   let(:headers) { { Authorization: "Bearer #{token}" } }
   let(:user) { FactoryBot.create(:user) }
@@ -21,7 +21,7 @@ RSpec.describe "Auth::Portfolios", type: :request do
         expect(Organization.count).to eq 0
         expect(Portfolio.count).to eq 0
 
-        post auth_portfolios_path, headers:, params: { portfolio: { name: 'アプリ名', url:, introduction: 'アプリ説明文', github_url: "https://example.github.com/#{user.github_username}/repo"} }
+        post auth_portfolios_path, headers:, params: { portfolio: { name: 'アプリ名', url:, introduction: 'アプリ説明文', github_url: "https://example.github.com/#{user.github_username}/repo" } }
         expect(response).to have_http_status :created
 
         portfolio = user.reload.portfolios.first
@@ -52,7 +52,7 @@ RSpec.describe "Auth::Portfolios", type: :request do
         it 'Unauthorizedが返ってきた場合、保存処理を中断し、500を返すこと' do
           allow_any_instance_of(Octokit::Client).to receive(:repository?).and_raise(Octokit::Unauthorized)
 
-          post auth_portfolios_path, headers:, params: { portfolio: { name: 'アプリ名', url:, introduction: 'アプリ説明文', github_url: "https://example.github.com/#{user.github_username}/repo"} }
+          post auth_portfolios_path, headers:, params: { portfolio: { name: 'アプリ名', url:, introduction: 'アプリ説明文', github_url: "https://example.github.com/#{user.github_username}/repo" } }
           expect(response).to have_http_status :internal_server_error
 
           expect(Portfolio.count).to eq 0
@@ -61,7 +61,7 @@ RSpec.describe "Auth::Portfolios", type: :request do
         it 'Forbiddenが返ってきた場合、保存処理を中断し、500を返すこと' do
           allow_any_instance_of(Octokit::Client).to receive(:repository?).and_raise(Octokit::Forbidden)
 
-          post auth_portfolios_path, headers:, params: { portfolio: { name: 'アプリ名', url:, introduction: 'アプリ説明文', github_url: "https://example.github.com/#{user.github_username}/repo"} }
+          post auth_portfolios_path, headers:, params: { portfolio: { name: 'アプリ名', url:, introduction: 'アプリ説明文', github_url: "https://example.github.com/#{user.github_username}/repo" } }
           expect(response).to have_http_status :internal_server_error
 
           expect(Portfolio.count).to eq 0
@@ -70,7 +70,7 @@ RSpec.describe "Auth::Portfolios", type: :request do
         it 'TooManyRequestsが返ってきた場合、保存処理を中断し、500を返すこと' do
           allow_any_instance_of(Octokit::Client).to receive(:repository?).and_raise(Octokit::TooManyRequests)
 
-          post auth_portfolios_path, headers:, params: { portfolio: { name: 'アプリ名', url:, introduction: 'アプリ説明文', github_url: "https://example.github.com/#{user.github_username}/repo"} }
+          post auth_portfolios_path, headers:, params: { portfolio: { name: 'アプリ名', url:, introduction: 'アプリ説明文', github_url: "https://example.github.com/#{user.github_username}/repo" } }
           expect(response).to have_http_status :internal_server_error
 
           expect(Portfolio.count).to eq 0
@@ -79,7 +79,7 @@ RSpec.describe "Auth::Portfolios", type: :request do
         it 'その他のエラーが返ってきた場合、保存処理を中断し、500を返すこと' do
           allow_any_instance_of(Octokit::Client).to receive(:repository?).and_raise(Octokit::Error)
 
-          post auth_portfolios_path, headers:, params: { portfolio: { name: 'アプリ名', url:, introduction: 'アプリ説明文', github_url: "https://example.github.com/#{user.github_username}/repo"} }
+          post auth_portfolios_path, headers:, params: { portfolio: { name: 'アプリ名', url:, introduction: 'アプリ説明文', github_url: "https://example.github.com/#{user.github_username}/repo" } }
           expect(response).to have_http_status :internal_server_error
 
           expect(Portfolio.count).to eq 0
