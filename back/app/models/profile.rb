@@ -2,6 +2,7 @@ class Profile < ApplicationRecord
   belongs_to :user
   validates :user_id, uniqueness: true
   validates :location, length: { maximum: 255 }
+  validates :hireable, inclusion: { in: [true, false] }
   validates :company, length: { maximum: 255 }
   validates :work_location, length: { maximum: 255 }
   validates :x_username, uniqueness: true, length: { maximum: 50 }

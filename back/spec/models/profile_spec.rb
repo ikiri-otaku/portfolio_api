@@ -56,6 +56,18 @@ RSpec.describe Profile, type: :model do
       end
     end
 
+    describe 'boolean' do
+      it 'trueもしくはfalseのみが登録でき、nilにならないこと' do
+        profile.hireable = true
+        expect(profile.valid?).to be true
+        profile.hireable = false
+        expect(profile.valid?).to be true
+        profile.hireable = nil
+        expect(profile.valid?).to be false
+        expect(profile.errors[:hireable]).to eq ['is not included in the list']
+      end
+    end
+
     describe '重複' do
       let(:another_profile) { FactoryBot.build(:profile) }
       before do
