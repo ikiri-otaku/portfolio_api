@@ -37,7 +37,7 @@ class Portfolio < ApplicationRecord
     self.latest_health_check_time = Time.current
   end
 
-  def save_associations!
+  def save_associations! # rubocop:disable Metrics/AbcSize
     repo_info = GithubClient.get_owner_and_repo(github_url)
     ActiveRecord::Base.transaction do
       if new_record? && (repo_info && user.github_username != repo_info[0])

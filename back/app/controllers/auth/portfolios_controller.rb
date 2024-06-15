@@ -16,9 +16,11 @@ class Auth::PortfoliosController < Auth::ApplicationController
     render status: :created
   end
 
-  def update; end # TODO
+  # TODO
+  def update; end
 
-  def destroy; end # TODO
+  # TODO
+  def destroy; end
 
   private
 

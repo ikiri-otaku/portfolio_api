@@ -1,3 +1,4 @@
 class PortfoliosController < ApplicationController
-  def show; end # TODO
+  # TODO
+  def show; end
 end
