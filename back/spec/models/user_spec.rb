@@ -44,4 +44,61 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe 'アソシエーション' do
+    it 'ユーザー削除時に関連するポートフォリオが削除されること' do
+      user = FactoryBot.create(:user)
+      portfolio = FactoryBot.create(:portfolio, user:)
+
+      user.destroy
+
+      expect(Portfolio.exists?(portfolio.id)).to be false
+    end
+
+    it 'ユーザーが削除されても関連するポートフォリオがorganizationに関連している場合、user_idがnilになること' do
+      user = FactoryBot.create(:user)
+      organization = FactoryBot.create(:organization)
+      portfolio = FactoryBot.create(:portfolio, user:, organization:)
+
+      user.destroy
+
+      expect(portfolio.reload.user_id).to be_nil
+      expect(Portfolio.exists?(portfolio.id)).to be true
+    end
+
+    it 'ユーザー削除時に関連するorganizationが削除されること' do
+      user = FactoryBot.create(:user)
+      organization = FactoryBot.create(:organization)
+      user.organizations << organization
+
+      user.destroy
+
+      expect(Organization.exists?(organization.id)).to be false
+    end
+
+    it '1人のユーザーが削除されても、他にユーザーがいればorganizationは削除されないこと' do
+      organization = FactoryBot.create(:organization)
+      user1 = FactoryBot.create(:user)
+      user2 = FactoryBot.create(:user)
+      user1.organizations << organization
+      user2.organizations << organization
+
+      user1.destroy
+
+      expect(Organization.exists?(organization.id)).to be true
+    end
+
+    it '複数のユーザーがすべて削除された場合、関連するorganizationも削除されること' do
+      organization = FactoryBot.create(:organization)
+      user1 = FactoryBot.create(:user)
+      user2 = FactoryBot.create(:user)
+      user1.organizations << organization
+      user2.organizations << organization
+
+      user1.destroy
+      user2.destroy
+
+      expect(Organization.exists?(organization.id)).to be false
+    end
+  end
 end

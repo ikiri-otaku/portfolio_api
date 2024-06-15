@@ -1,4 +1,6 @@
 class Portfolio < ApplicationRecord
+  before_destroy :check_user_dependency
+
   attr_accessor :github_url, :tech_names
 
   belongs_to :user, optional: true
@@ -47,5 +49,11 @@ class Portfolio < ApplicationRecord
       # TODO: PortfolioTech保存
       save!
     end
+  end
+
+  private
+
+  def check_user_dependency
+    throw(:abort) if organization.present?
   end
 end
