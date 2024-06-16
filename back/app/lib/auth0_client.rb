@@ -7,7 +7,7 @@ class Auth0Client
   Response = Struct.new(:decoded_token, :error)
 
   # Token Validation
-  def self.validate_token(token) # # rubocop:disable Metrics/AbcSize
+  def self.validate_token(token) # rubocop:disable Metrics/AbcSize
     jwks_response = jwks
 
     unless jwks_response.is_a? Net::HTTPSuccess
