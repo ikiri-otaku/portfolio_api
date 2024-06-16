@@ -94,6 +94,13 @@ RSpec.describe Portfolio, type: :model do
       portfolio = FactoryBot.create(:portfolio)
       expect(portfolio.destroy).to be_truthy
     end
+
+    describe 'github_repository' do
+      let!(:github_repository) { FactoryBot.create(:github_repository) }
+      it 'portfolio を削除すると github_repository を同時に削除すること' do
+        expect { github_repository.portfolio.destroy! }.to change { GithubRepository.count }.by(-1)
+      end
+    end
   end
 
   describe 'メソッド' do

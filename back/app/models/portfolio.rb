@@ -5,6 +5,7 @@ class Portfolio < ApplicationRecord
 
   belongs_to :user, optional: true
   belongs_to :organization, optional: true
+  has_one :github_repository, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :url, presence: true,
