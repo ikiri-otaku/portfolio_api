@@ -52,6 +52,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_09_031935) do
     t.index ["organization_id"], name: "index_portfolios_on_organization_id"
     t.index ["url"], name: "index_portfolios_on_url", unique: true
     t.index ["user_id"], name: "index_portfolios_on_user_id"
+  create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "introduction"
+    t.string "location"
+    t.string "company"
+    t.boolean "hireable", default: true, null: false
+    t.string "work_location"
+    t.string "x_username", limit: 50
+    t.string "zenn_username", limit: 50
+    t.string "qiita_username", limit: 50
+    t.string "atcoder_username", limit: 50
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["atcoder_username"], name: "index_profiles_on_atcoder_username", unique: true
+    t.index ["qiita_username"], name: "index_profiles_on_qiita_username", unique: true
+    t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
+    t.index ["x_username"], name: "index_profiles_on_x_username", unique: true
+    t.index ["zenn_username"], name: "index_profiles_on_zenn_username", unique: true
   end
 
   create_table "teches", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -97,6 +115,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_09_031935) do
   add_foreign_key "portfolio_teches", "teches"
   add_foreign_key "portfolios", "organizations"
   add_foreign_key "portfolios", "users"
+  add_foreign_key "profiles", "users"
   add_foreign_key "teches", "teches", column: "parent_id"
   add_foreign_key "user_teches", "teches"
   add_foreign_key "user_teches", "users"
