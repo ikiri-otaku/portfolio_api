@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_01_053542) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_16_035836) do
+  create_table "github_repositories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "portfolio_id", null: false
+    t.string "owner", limit: 50, null: false
+    t.string "repo", limit: 100, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["portfolio_id"], name: "index_github_repositories_on_portfolio_id", unique: true
+  end
+
   create_table "organization_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.bigint "user_id", null: false
@@ -81,6 +90,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_01_053542) do
     t.index ["github_username"], name: "index_users_on_github_username", unique: true
   end
 
+  add_foreign_key "github_repositories", "portfolios"
   add_foreign_key "organization_users", "organizations"
   add_foreign_key "organization_users", "users"
   add_foreign_key "portfolios", "organizations"

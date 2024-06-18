@@ -17,9 +17,29 @@ RSpec.describe 'Auth::Portfolios', type: :request do
         allow(Net::HTTP).to receive(:get_response).with(URI.parse(url)).and_return(health_check_response)
       end
 
-      it '正常なパラメータの場合、ポートフォリオを作成し、201を返す' do
+      it '必須項目のみパラメータで渡した場合、ポートフォリオを作成し、201を返す' do
         expect(Organization.count).to eq 0
         expect(Portfolio.count).to eq 0
+        expect(GithubRepository.count).to eq 0
+
+        post auth_portfolios_path, headers:, params: { portfolio: { name: 'アプリ名', url: } }
+        expect(response).to have_http_status :created
+
+        portfolio = user.reload.portfolios.first
+        expect(portfolio.user_id).to eq user.id
+        expect(portfolio.organization_id).to be nil
+        expect(portfolio.name).to eq 'アプリ名'
+        expect(portfolio.url).to eq 'http://example.com'
+        expect(portfolio.introduction).to be nil
+        expect(portfolio.unhealthy_cnt).to eq 0
+        expect(portfolio.latest_health_check_time).not_to be nil
+        expect(portfolio.github_repository).to be nil
+      end
+
+      it '全項目をパラメータで渡した場合、ポートフォリオを作成し、201を返す' do
+        expect(Organization.count).to eq 0
+        expect(Portfolio.count).to eq 0
+        expect(GithubRepository.count).to eq 0
 
         post auth_portfolios_path, headers:, params: { portfolio: { name: 'アプリ名', url:, introduction: 'アプリ説明文', github_url: "https://example.github.com/#{user.github_username}/repo" } }
         expect(response).to have_http_status :created
@@ -32,6 +52,8 @@ RSpec.describe 'Auth::Portfolios', type: :request do
         expect(portfolio.introduction).to eq 'アプリ説明文'
         expect(portfolio.unhealthy_cnt).to eq 0
         expect(portfolio.latest_health_check_time).not_to be nil
+        expect(portfolio.github_repository.owner).to eq user.github_username
+        expect(portfolio.github_repository.repo).to eq 'repo'
       end
     end
 
@@ -84,6 +106,15 @@ RSpec.describe 'Auth::Portfolios', type: :request do
 
           expect(Portfolio.count).to eq 0
           expect(Rails.logger).to have_received(:error).with('#<GithubClient::Error: An error occurred: Octokit::Error>')
+        end
+      end
+      context 'repositoryのownerでもcollaboratorでもない場合' do
+        it '422を返す' do
+          mock_auth(token:, auth0_id: user.auth0_id)
+          allow_any_instance_of(Octokit::Client).to receive(:collaborator?).and_return(false)
+
+          post auth_portfolios_path, headers:, params: { portfolio: { name: 'アプリ名', url:, introduction: 'アプリ説明文', github_url: 'https://example.github.com/team/repo' } }
+          expect(response).to have_http_status :unprocessable_entity
         end
       end
     end
