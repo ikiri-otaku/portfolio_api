@@ -108,15 +108,40 @@ RSpec.describe Portfolio, type: :model do
     let(:user_with_org) { organization.users.first }
     let(:user_no_org) { FactoryBot.create(:user) }
 
+    describe '#github_url' do
+      let(:portfolio) { FactoryBot.build(:portfolio) }
+      it 'github_repository が紐づかない場合、nilを返す' do
+        expect(portfolio.github_url).to be nil
+      end
+      it 'github_repository が紐づく場合、URLを返す' do
+        portfolio.build_github_repository(owner: 'owner', repo: 'repo')
+        expect(portfolio.github_url).to eq "#{ENV['GITHUB_DOMAIN']}/owner/repo"
+      end
+    end
+
+    describe '#github_url=' do
+      let(:portfolio) { FactoryBot.build(:portfolio) }
+      it 'github_urlが不正な場合、例外をスローする' do
+        expect {
+          portfolio.github_url = 'https://example.github.com/'
+        }.to raise_error(ActiveRecord::RecordInvalid, /バリデーションに失敗しました: GitHub URLはリポジトリのトップページを指定してください/)
+        expect {
+        portfolio.github_url = 'https://example.github.com/owner/repo/1'
+        }.to raise_error(ActiveRecord::RecordInvalid, /バリデーションに失敗しました: GitHub URLはリポジトリのトップページを指定してください/)
+      end
+      it 'github_urlが正常な場合、github_repositoryを紐づける' do
+        portfolio.github_url = 'https://example.github.com/owner/repo?id=100'
+        expect(portfolio.github_repository.owner).to eq 'owner'
+        expect(portfolio.github_repository.repo).to eq 'repo'
+        expect(portfolio.github_url).to eq "#{ENV['GITHUB_DOMAIN']}/owner/repo"
+      end
+    end
+
     describe '#check_repo_owner?' do
       let(:portfolio) { FactoryBot.build(:portfolio) }
       it 'github_urlが空の場合、trueを返す' do
         portfolio.github_url = ''
         expect(portfolio.check_repo_owner?(user_no_org)).to be true
-      end
-      it 'github_urlが不正な場合、falseを返す' do
-        portfolio.github_url = 'https://example.github.com/'
-        expect(portfolio.check_repo_owner?(user_no_org)).to be false
       end
       it '自身のリポジトリに存在しない場合、falseを返す' do
         allow_any_instance_of(Octokit::Client).to receive(:repository?).and_return(false)

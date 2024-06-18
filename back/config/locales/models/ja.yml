@@ -21,7 +21,7 @@ ja:
         name: チーム名
         github_username: GitHubのOrganization名
       portfolio:
-        name: アプリ名
+        github_url: GitHub URL
       tech:
         name: 技術名
         parent_id: 関連技術のID

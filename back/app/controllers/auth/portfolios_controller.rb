@@ -29,7 +29,7 @@ class Auth::PortfoliosController < Auth::ApplicationController
       :name,
       :url,
       :introduction,
-      :github_url # TODO: GithubRepository
+      :github_url
       # :tech_names TODO
     )
   end
