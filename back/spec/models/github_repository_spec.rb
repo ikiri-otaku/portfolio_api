@@ -54,4 +54,39 @@ RSpec.describe GithubRepository, type: :model do
       end
     end
   end
+
+  describe 'メソッド' do
+    let(:organization) { FactoryBot.create(:organization, :with_user) }
+    let(:user_with_org) { organization.users.first }
+    let(:user_no_org) { FactoryBot.create(:user) }
+
+    describe '#check_repo_owner?' do
+      let(:portfolio) { FactoryBot.build(:portfolio) }
+      it '自身のリポジトリに存在しない場合、falseを返す' do
+        allow_any_instance_of(Octokit::Client).to receive(:repository?).and_return(false)
+        portfolio.github_url = "https://example.github.com/#{user_no_org.github_username}/repo"
+        expect(portfolio.github_repository.check_repo_owner?(user_no_org)).to be false
+      end
+      it '自身のリポジトリに存在する場合、trueを返す' do
+        allow_any_instance_of(Octokit::Client).to receive(:repository?).and_return(true)
+        portfolio.github_url = "https://example.github.com/#{user_no_org.github_username}/repo"
+        expect(portfolio.github_repository.check_repo_owner?(user_no_org)).to be true
+      end
+      it '自身がownerでない存在しないリポジトリの場合、例外を投げる' do
+        allow_any_instance_of(Octokit::Client).to receive(:collaborator?).and_raise(Octokit::NotFound)
+        portfolio.github_url = "https://example.github.com/#{organization.github_username}/repo"
+        expect(portfolio.github_repository.check_repo_owner?(user_no_org)).to be false
+      end
+      it 'チームのコラボレーターでない場合、falseを返す' do
+        allow_any_instance_of(Octokit::Client).to receive(:collaborator?).and_return(false)
+        portfolio.github_url = "https://example.github.com/#{organization.github_username}/repo"
+        expect(portfolio.github_repository.check_repo_owner?(user_no_org)).to be false
+      end
+      it 'チームのコラボレーターである場合、trueを返す' do
+        allow_any_instance_of(Octokit::Client).to receive(:collaborator?).and_return(true)
+        portfolio.github_url = "https://example.github.com/#{organization.github_username}/repo"
+        expect(portfolio.github_repository.check_repo_owner?(user_with_org)).to be true
+      end
+    end
+  end
 end

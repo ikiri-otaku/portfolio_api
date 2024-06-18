@@ -15,9 +15,9 @@ class Portfolio < ApplicationRecord
   validates :unhealthy_cnt, numericality: { only_integer: true, less_than_or_equal_to: 4, greater_than_or_equal_to: 0 }
 
   def github_url
-    if github_repository
-      "#{ENV['GITHUB_DOMAIN']}/#{github_repository.owner}/#{github_repository.repo}"
-    end
+    return unless github_repository
+
+    "#{ENV.fetch('GITHUB_DOMAIN', nil)}/#{github_repository.owner}/#{github_repository.repo}"
   end
 
   def github_url=(url)
@@ -26,22 +26,11 @@ class Portfolio < ApplicationRecord
 
     repo_info = GithubClient.get_owner_and_repo(url)
     unless repo_info
-      self.errors.add(:github_url, I18n.t('errors.messages.repository_top'))
-      raise ActiveRecord::RecordInvalid.new(self)
+      errors.add(:github_url, I18n.t('errors.messages.repository_top'))
+      raise ActiveRecord::RecordInvalid, self
     end
 
     build_github_repository(owner: repo_info[0], repo: repo_info[1])
-  end
-
-  def check_repo_owner?(user)
-    return true if github_repository.blank? || !github_repository.changed?
-
-    github_client = GithubClient.new
-    if user.github_username == github_repository.owner
-      github_client.repository_exists?(github_repository.owner, github_repository.repo)
-    else
-      github_client.collaborator?(github_repository.owner, github_repository.repo, user.github_username)
-    end
   end
 
   def health_check
