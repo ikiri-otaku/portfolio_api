@@ -119,10 +119,72 @@ RSpec.describe 'Auth::Portfolios', type: :request do
       end
     end
   end
+
   describe 'PATCH  /auth/portfolios' do
+    describe '正常系' do
+
+      before do
+        mock_auth(token:, auth0_id: user.auth0_id)
+        allow_any_instance_of(Octokit::Client).to receive(:repository?).and_return(true)
+        allow_any_instance_of(Octokit::Client).to receive(:collaborator?).and_return(true)
+        health_check_response = instance_double(Net::HTTPSuccess)
+        allow(health_check_response).to receive(:is_a?).with(Net::HTTPSuccess).and_return(true)
+        allow(Net::HTTP).to receive(:get_response).with(URI.parse(url)).and_return(health_check_response)
+      end
+
+      fit '必須項目のみパラメータで渡した場合、ポートフォリオを更新し、201を返す' do
+        expect(Organization.count).to eq 0
+        expect(Portfolio.count).to eq 0
+        expect(GithubRepository.count).to eq 0
+
+        post auth_portfolios_path, headers:, params: { portfolio: { name: 'アプリ名', url: } }
+        expect(response).to have_http_status :created
+
+        portfolio = user.reload.portfolios.first
+        expect(portfolio.user_id).to eq user.id
+        expect(portfolio.organization_id).to be nil
+        expect(portfolio.name).to eq 'アプリ名'
+        expect(portfolio.url).to eq 'http://example.com'
+        expect(portfolio.introduction).to be nil
+        expect(portfolio.unhealthy_cnt).to eq 0
+        expect(portfolio.latest_health_check_time).not_to be nil
+        expect(portfolio.github_repository).to be nil
+      end
+
+      fit '全項目をパラメータで渡した場合、ポートフォリオを作成し、201を返す' do
+        expect(Organization.count).to eq 0
+        expect(Portfolio.count).to eq 0
+        expect(GithubRepository.count).to eq 0
+
+        post auth_portfolios_path, headers:, params: { portfolio: { name: 'アプリ名', url:, introduction: 'アプリ説明文', github_url: "https://example.github.com/#{user.github_username}/repo" } }
+        expect(response).to have_http_status :created
+
+        portfolio = user.reload.portfolios.first
+        expect(portfolio.user_id).to eq user.id
+        expect(portfolio.organization_id).to be nil
+        expect(portfolio.name).to eq 'アプリ名'
+        expect(portfolio.url).to eq 'http://example.com'
+        expect(portfolio.introduction).to eq 'アプリ説明文'
+        expect(portfolio.unhealthy_cnt).to eq 0
+        expect(portfolio.latest_health_check_time).not_to be nil
+        expect(portfolio.github_repository.owner).to eq user.github_username
+        expect(portfolio.github_repository.repo).to eq 'repo'
+      end
+    end
+
+    describe '異常系' do
+# 編集権限がない
+    end
     # TODO
   end
+
   describe 'DELETE /auth/portfolios' do
+    # describe '正常系' do
+
+    # end
+    # describe '異常系' do
+
+    # end
     # TODO
   end
 end
