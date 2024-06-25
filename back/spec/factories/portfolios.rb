@@ -7,6 +7,11 @@ FactoryBot.define do
     unhealthy_cnt { 0 }
     latest_health_check_time { Time.current }
 
+    trait :required_fields do
+      organization_id { nil }
+      introduction { nil }
+    end
+
     trait :with_organization do
       after(:create) do |portfolio|
         organization = FactoryBot.create(:organization)

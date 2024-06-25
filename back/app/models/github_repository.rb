@@ -4,6 +4,7 @@ class GithubRepository < ApplicationRecord
   validates :portfolio_id, uniqueness: true
   validates :owner, presence: true, length: { maximum: 50 }
   validates :repo, presence: true, length: { maximum: 100 }
+  validate :repository_unchanged, on: :update
 
   def check_repo_owner?(user)
     return true unless changed?
@@ -14,5 +15,11 @@ class GithubRepository < ApplicationRecord
     else
       github_client.collaborator?(owner, repo, user.github_username)
     end
+  end
+
+  private
+
+  def repository_unchanged
+    errors.add(:base, :unchanged) if owner_changed? || repo_changed?
   end
 end

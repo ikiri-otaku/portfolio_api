@@ -1,6 +1,4 @@
 class Portfolio < ApplicationRecord
-  before_destroy :check_user_dependency
-
   attr_accessor :tech_names
 
   belongs_to :user, optional: true
@@ -22,7 +20,7 @@ class Portfolio < ApplicationRecord
 
   def github_url=(url)
     # NOTE: 一度設定したら変更不可
-    return if github_repository || url.blank?
+    return if url.blank?
 
     repo_info = GithubClient.get_owner_and_repo(url)
     unless repo_info
@@ -30,7 +28,11 @@ class Portfolio < ApplicationRecord
       raise ActiveRecord::RecordInvalid, self
     end
 
-    build_github_repository(owner: repo_info[0], repo: repo_info[1])
+    if github_repository
+      github_repository.attributes = { owner: repo_info[0], repo: repo_info[1] }
+    else
+      build_github_repository(owner: repo_info[0], repo: repo_info[1])
+    end
   end
 
   def health_check
@@ -47,17 +49,13 @@ class Portfolio < ApplicationRecord
     ActiveRecord::Base.transaction do
       if github_repository&.changed? && (user.github_username != github_repository.owner)
         # Organization作成
-        self.organization = Organization.find_by(github_username: github_repository.owner) || Organization.new(name: github_repository.owner, github_username: github_repository.owner)
+        self.organization = Organization.find_by(github_username: github_repository.owner) ||
+                            Organization.new(name: github_repository.owner, github_username: github_repository.owner)
         user.organizations << organization unless user.organizations.include?(organization)
       end
       # TODO: PortfolioTech保存
+      github_repository.save! if github_repository&.changed?
       save!
     end
-  end
-
-  private
-
-  def check_user_dependency
-    throw(:abort) if organization.present?
   end
 end
