@@ -35,7 +35,17 @@ class Auth::PortfoliosController < Auth::ApplicationController
   end
 
   # DELETE /auth/portfolios
-  def destroy; end
+  def destroy
+    @portfolio = Portfolio.find(params[:id])
+
+    # 削除権限チェック
+    return render status: :unauthorized unless check_authority?
+
+    # 削除
+    @portfolio.destroy!
+
+    render status: :created
+  end
 
   private
 

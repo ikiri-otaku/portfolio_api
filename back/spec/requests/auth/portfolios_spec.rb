@@ -216,12 +216,53 @@ RSpec.describe 'Auth::Portfolios', type: :request do
   end
 
   describe 'DELETE /auth/portfolios' do
-    # describe '正常系' do
+    before do
+      mock_auth(token:, auth0_id: user.auth0_id)
+      allow_any_instance_of(Octokit::Client).to receive(:repository?).and_return(true)
+      allow_any_instance_of(Octokit::Client).to receive(:collaborator?).and_return(true)
+      health_check_response = instance_double(Net::HTTPSuccess)
+      allow(health_check_response).to receive(:is_a?).with(Net::HTTPSuccess).and_return(true)
+      allow(Net::HTTP).to receive(:get_response).with(URI.parse(url)).and_return(health_check_response)
+    end
 
-    # end
-    # describe '異常系' do
+    describe '正常系' do
+      let(:portfolio_with_association) { FactoryBot.create(:portfolio, user:, organization:, github_url: "https://example.github.com/#{organization.github_username}/repo") }
+      let(:portfolio_without_association) { FactoryBot.create(:portfolio, :required_fields, user:) }
+      it 'アソシエーションが存在しない場合、ポートフォリオを削除する' do
+        portfolio_without_association.save!
+        expect(Organization.count).to eq 0
+        expect(Portfolio.count).to eq 1
+        expect(GithubRepository.count).to eq 0
 
-    # end
-    # TODO
+        delete auth_portfolio_path(portfolio_without_association), headers:, params: {}
+        expect(response).to have_http_status :created
+
+        expect(Portfolio.count).to eq 0
+      end
+      it 'アソシエーションが存在する場合、アソシエーションを含めポートフォリオを削除する' do
+        portfolio_with_association.save!
+        expect(Organization.count).to eq 1
+        expect(Portfolio.count).to eq 1
+        expect(GithubRepository.count).to eq 1
+
+        delete auth_portfolio_path(portfolio_with_association), headers:, params: {}
+
+        expect(response).to have_http_status :created
+
+        expect(Organization.count).to eq 1
+        expect(Portfolio.count).to eq 0
+        expect(GithubRepository.count).to eq 0
+      end
+    end
+    describe '異常系' do
+      let(:portfolio_not_editable) { FactoryBot.create(:portfolio, name: 'アプリ名') }
+      it '編集権限がない場合、401を返す' do
+        delete auth_portfolio_path(portfolio_not_editable), headers:, params: {}
+        expect(response).to have_http_status :unauthorized
+
+        portfolio_not_editable.reload
+        expect(portfolio_not_editable.name).to eq 'アプリ名'
+      end
+    end
   end
 end

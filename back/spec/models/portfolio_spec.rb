@@ -85,7 +85,7 @@ RSpec.describe Portfolio, type: :model do
       expect(portfolio_with_org.organization).to be_present
     end
 
-    it 'organizationが存在する場合、portfolioを削除できないこと' do
+    xit 'organizationが存在する場合、portfolioを削除できないこと' do
       portfolio = FactoryBot.create(:portfolio, :with_organization)
       expect { portfolio.destroy }.to_not(change { Portfolio.count })
     end
