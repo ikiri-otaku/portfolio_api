@@ -31,7 +31,7 @@ class Portfolio < ApplicationRecord
     end
 
     if github_repository
-      self.github_repository.attributes = { owner: repo_info[0], repo: repo_info[1] }
+      github_repository.attributes = { owner: repo_info[0], repo: repo_info[1] }
     else
       build_github_repository(owner: repo_info[0], repo: repo_info[1])
     end
@@ -51,11 +51,12 @@ class Portfolio < ApplicationRecord
     ActiveRecord::Base.transaction do
       if github_repository&.changed? && (user.github_username != github_repository.owner)
         # Organization作成
-        self.organization = Organization.find_by(github_username: github_repository.owner) || Organization.new(name: github_repository.owner, github_username: github_repository.owner)
+        self.organization = Organization.find_by(github_username: github_repository.owner) ||
+                            Organization.new(name: github_repository.owner, github_username: github_repository.owner)
         user.organizations << organization unless user.organizations.include?(organization)
       end
       # TODO: PortfolioTech保存
-      github_repository&.save! if github_repository&.changed?
+      github_repository.save! if github_repository&.changed?
       save!
     end
   end

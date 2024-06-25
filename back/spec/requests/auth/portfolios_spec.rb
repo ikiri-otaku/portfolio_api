@@ -163,7 +163,8 @@ RSpec.describe 'Auth::Portfolios', type: :request do
         expect(portfolio_all_fields.github_repository.repo).to eq 'repo'
       end
       it '全項目をパラメータで渡した場合、ポートフォリオを作成し、201を返す' do
-        patch auth_portfolio_path(portfolio_required_fields), headers:, params: { portfolio: { name: 'アプリ名更新', url: 'http://example.com/update', introduction: '紹介文', github_url: "https://example.github.com/#{organization.github_username}/repo" } }
+        patch auth_portfolio_path(portfolio_required_fields), headers:,
+          params: { portfolio: { name: 'アプリ名更新', url: 'http://example.com/update', introduction: '紹介文', github_url: "https://example.github.com/#{organization.github_username}/repo" } }
 
         expect(response).to have_http_status :created
 
