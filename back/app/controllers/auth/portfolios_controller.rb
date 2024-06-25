@@ -20,6 +20,7 @@ class Auth::PortfoliosController < Auth::ApplicationController
   # PATCH  /auth/portfolios
   def update
     @portfolio = Portfolio.find(params[:id])
+    @portfolio.attributes = portfolio_params
 
     # 更新権限チェック
     return render status: :unauthorized unless check_authority?
@@ -55,6 +56,6 @@ class Auth::PortfoliosController < Auth::ApplicationController
   end
 
   def check_authority?
-    @portfolio.user_id == current_user.id || current_user.organizations.include? @portfolio.organization
+    @portfolio.user_id == current_user.id || (current_user.organizations.include? @portfolio.organization)
   end
 end

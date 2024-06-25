@@ -35,3 +35,9 @@ ja:
         name: ユーザー名
         github_username: GitHubのユーザー名
         auth0_id: Auth0のID
+    errors:
+      models:
+        github_repository:
+          attributes:
+            base:
+              unchanged: 'GitHub URLは一度登録したら変更できません。'

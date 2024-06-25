@@ -8,5 +8,14 @@ FactoryBot.define do
         organization.users << FactoryBot.create(:user) if organization.organization_users.blank?
       end
     end
+
+    transient do
+      my_user { nil }
+    end
+    trait :with_my_user do
+      after(:create) do |organization, evaluator|
+        organization.users << evaluator.my_user
+      end
+    end
   end
 end
