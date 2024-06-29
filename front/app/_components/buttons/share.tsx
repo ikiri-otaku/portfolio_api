@@ -1,4 +1,4 @@
-import { ShareIcon } from '@/app/components/icons/shareIcon';
+import { ShareIcon } from '@/app/_components/icons/shareIcon';
 import { Button } from '@mantine/core';
 
 export default function Share() {

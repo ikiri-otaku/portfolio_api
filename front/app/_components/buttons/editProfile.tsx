@@ -1,4 +1,4 @@
-import { ProfileIcon } from '@/app/components/icons/profileIcon';
+import { ProfileIcon } from '@/app/_components/icons/profileIcon';
 import { Button } from '@mantine/core';
 
 export default function EditProfile() {
