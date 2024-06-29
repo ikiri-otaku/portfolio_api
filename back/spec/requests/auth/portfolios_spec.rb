@@ -19,6 +19,7 @@ RSpec.describe 'Auth::Portfolios', type: :request do
     describe '正常系' do
       let(:portfolio_all_fields) { FactoryBot.create(:portfolio, user:, organization:, created_at: '2020-01-05 09:30:00', github_url: "https://example.github.com/#{organization.github_username}/repo") }
       let(:portfolio_required_fields) { FactoryBot.create(:portfolio, :required_fields, user:, created_at: '2020-01-05 09:30:00') }
+      let(:portfolio_not_editable) { FactoryBot.create(:portfolio, name: 'アプリ名') }
       it '必須項目のみ登録したデータを返す場合、nilの項目は空文字で返す' do
         get auth_portfolio_path(portfolio_required_fields), headers:, params: {}
         expect(response).to have_http_status :ok
@@ -29,6 +30,7 @@ RSpec.describe 'Auth::Portfolios', type: :request do
         expect(json['introduction']).to be nil
         expect(json['created_date']).to eq '2020/01/05'
         expect(json['creator']).to eq user.name
+        expect(json['editable']).to be true
       end
       it '全項目を登録したデータを返す場合、整形して返す' do
         get auth_portfolio_path(portfolio_all_fields), headers:, params: {}
@@ -40,6 +42,19 @@ RSpec.describe 'Auth::Portfolios', type: :request do
         expect(json['introduction']).to eq 'This is a sample portfolio introduction.'
         expect(json['created_date']).to eq '2020/01/05'
         expect(json['creator']).to eq organization.name
+        expect(json['editable']).to be true
+      end
+      it '編集権限のないポートフォリオを取得する場合、editableがfalseになる' do
+        get auth_portfolio_path(portfolio_not_editable), headers:, params: {}
+        expect(response).to have_http_status :ok
+
+        json = response.parsed_body
+        expect(json['name']).to eq portfolio_not_editable.name
+        expect(json['url']).to eq portfolio_not_editable.url
+        expect(json['introduction']).to eq portfolio_not_editable.introduction
+        expect(json['created_date']).to eq portfolio_not_editable.created_at.strftime('%Y/%m/%d')
+        expect(json['creator']).to eq portfolio_not_editable.user.name
+        expect(json['editable']).to be false
       end
     end
 
