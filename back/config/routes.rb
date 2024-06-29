@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   # 認証が必要なルーティングはここ
   namespace :auth do
-    resources :portfolios, only: %i[create update destroy]
+    resources :portfolios, only: %i[show create update destroy]
     resource :user, only: %i[create destroy]
   end
 

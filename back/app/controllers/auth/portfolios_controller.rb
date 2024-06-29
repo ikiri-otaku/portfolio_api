@@ -1,6 +1,14 @@
 class Auth::PortfoliosController < Auth::ApplicationController
   INVALID_GITHUB_URL = { message: 'GitHubのリポジトリが存在しないか、コラボレーターではありません' }.freeze
 
+  # GET    /auth/portfolios/:id
+  def show
+    @portfolio = Portfolio.eager_load(:user, :organization).find(params[:id])
+    # TODO: View数更新
+    # TODO: 技術、画像、LIKE、View取得
+    render status: :ok, json: @portfolio.to_api_response
+  end
+
   # POST   /auth/portfolios
   def create
     @portfolio = current_user.portfolios.new(portfolio_params)
