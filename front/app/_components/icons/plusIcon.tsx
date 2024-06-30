@@ -2,7 +2,7 @@ export const PlusIcon = ({
   height = "",
   width = "",
   fill = "none",
-  stroke = "#e7e7e7",
+  stroke = "",
 }) => {
   return (
     <svg

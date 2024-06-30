@@ -15,12 +15,12 @@ import { AtcoderIcon } from '../_components/icons/atcoderIcon';
 export default function Home() {
   return (
     <MantineProvider theme={theme}>
-      <section className="container mx-auto py-8 px-16">
+      <section className="container mx-auto pb-24 px-48">
         <div className="flex flex-col pt-[86px]">
           <div className="flex justify-between">
             <div className="flex space-x-4">
               <div className="flex items-center space-x-4">
-                <UserIcon width="150" height="150" />
+                <UserIcon width="120" height="120" />
               </div>
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold">イキリ オタク</h1>
@@ -49,13 +49,13 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <p className="mb-[34px] mt-2 text-base font-bold leading-snug text-textGray">
+        <p className="mb-[34px] mt-6 text-base font-bold leading-snug text-textGray">
           自己紹介テキストここに箇条書きのためで考えています。とにかく今日を話題に皆様色々な観点がありますが
           でもまあすぐは反省がしぶらくあかり、まだに取りなないないなけど、根性を持ちますものはどうしても当時からしっててました。
           他のキャルシン著者。根性を持ちふくじん個体はすずにすますったの主要部分がきてます。その他もうは世界的多くの部位をつなげて。
           同意と心もの多くです。私を皆にご著作として彼ら実践できる表現をどうようにとしてもご表現忘れらないなは、ついに同期にもすぐになってきて多くなもののしあん。
         </p>
-        <h1 className="text-2xl text-left font-bold my-4">技術経歴</h1>
+        <h1 className="text-2xl text-left font-bold my-4">技術歴</h1>
         <h1 className="text-2xl text-left font-bold my-4">アプリ</h1>
         <SimpleGrid cols={3} spacing="lg">
           <Card shadow="sm" padding="lg" radius="md" withBorder>

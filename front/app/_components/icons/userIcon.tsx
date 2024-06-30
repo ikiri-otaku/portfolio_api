@@ -8,7 +8,7 @@ export const UserIcon = ({
     <svg
       width={width}
       height={height}
-      viewBox="-10 -5 35 35"
+      viewBox="-6 -5 30 30"
       fill={fill}
       xmlns="http://www.w3.org/2000/svg"
     >
