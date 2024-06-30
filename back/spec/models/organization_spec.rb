@@ -43,5 +43,20 @@ RSpec.describe Organization, type: :model do
         expect(another_organization.errors[:github_username]).to eq ['はすでに存在します']
       end
     end
+
+    describe 'アソシエーション' do
+      it '組織を削除すると関連するポートフォリオのorganization_idがnilになること' do
+        organization = FactoryBot.create(:organization)
+        portfolio1 = FactoryBot.create(:portfolio, organization:)
+        portfolio2 = FactoryBot.create(:portfolio, organization:)
+
+        organization.destroy
+
+        expect(Portfolio.exists?(portfolio1.id)).to be true
+        expect(Portfolio.exists?(portfolio2.id)).to be true
+        expect(portfolio1.reload.organization_id).to be_nil
+        expect(portfolio2.reload.organization_id).to be_nil
+      end
+    end
   end
 end
