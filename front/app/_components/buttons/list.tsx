@@ -1,4 +1,4 @@
-import { DesktopIcon } from '@/app/components/icons/desktopIcon';
+import { DesktopIcon } from '@/app/_components/icons/desktopIcon';
 import { Button } from '@mantine/core';
 
 export default function List() {

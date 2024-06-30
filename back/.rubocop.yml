@@ -23,18 +23,29 @@ AllCops:
     - "config/puma.rb"
 
 ### ルールのカスタマイズ
-
-# 設定が厳しいので一旦全てfalseにする
-Metrics:
-  Enabled: false
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
 
 # 一行あたりの文字数
 Layout/LineLength:
-  Enabled: false
+  Max: 150
 
 # メソッドの改行ルール
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
+
+# # 設定が厳しいので一旦全てfalseにする
+# Metrics:
+#   Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Performance/TimesMap:
+  Enabled: false
+
+Rails:
+  Enabled: true
 
 # 日本語にコメントを許可
 Style/AsciiComments:
@@ -53,38 +64,42 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 # ガード節の提案（難しいので一旦false）
-Style/GuardClause:
+# Style/GuardClause:
+#   Enabled: false
+
+Style/SingleLineBlockParams:
   Enabled: false
 
 # 文字列のダブルクォートチェック
 Style/StringLiterals:
-  Enabled: false
+  Enabled: true
 
 # シンボルによる配列の%記法のチェック
 Style/SymbolArray:
-  Enabled: false
-  # EnforcedStyle: brackets
+  EnforcedStyle: percent
+  MinSize: 3
 
 # 文字列による配列の%記法のチェック
 Style/WordArray:
-  Enabled: false
+  EnforcedStyle: percent
+  MinSize: 3
 
 # 変数名に数字を許可
 Naming/VariableNumber:
   Enabled: false
 
 # = と == の指摘
-Lint/AssignmentInCondition:
-  Enabled: false
+# Lint/AssignmentInCondition:
+#   Enabled: false
 
 # メソッド名等の命名の指摘
-Naming/PredicateName:
-  Enabled: false
+# Naming/PredicateName:
+#   Enabled: false
 
 # 未i18nのチェック（バリデーションエラーメッセージをi18nに登録するのはやや冗長？なためfalse）
-Rails/I18nLocaleTexts:
-  Enabled: false
+# Rails/I18nLocaleTexts:
+#   Enabled: false
 
 # before_actionの際の未定義メソッドのチェック（deviseとの兼ね合いで一旦false）
-Rails/LexicallyScopedActionFilter:
-  Enabled: false
+# Rails/LexicallyScopedActionFilter:
+#   Enabled: false

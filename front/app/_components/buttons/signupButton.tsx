@@ -1,7 +1,14 @@
-import { Button } from '@mantine/core';
+import Link from "next/link";
 
 export default function SignupButton() {
   return (
-    <Button variant="filled" color="violet.7" size="sm" radius="xl">新規登録</Button>
+    <div className="h-10 rounded-full bg-main">
+      <Link
+        href="/signup"
+        className="h-full flex justify-center items-center font-bold px-5 text-sm text-bgWhite"
+      >
+        新規登録
+      </Link>
+    </div>
   );
 }
