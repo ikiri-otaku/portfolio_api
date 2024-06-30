@@ -7,11 +7,11 @@ class Auth0Client
   Response = Struct.new(:decoded_token, :error)
 
   # Token Validation
-  def self.validate_token(token)
+  def self.validate_token(token) # rubocop:disable Metrics/AbcSize
     jwks_response = jwks
 
     unless jwks_response.is_a? Net::HTTPSuccess
-      error = Error.new(message: 'Unable to verify credentials', status: :internal_server_error)
+      error = Error.new(message: I18n.t('errors.messages.unable_to_verify_credentials'), status: :internal_server_error)
       return Response.new(nil, error)
     end
 
@@ -21,8 +21,8 @@ class Auth0Client
 
     Response.new(decoded_token, nil)
   rescue JWT::VerificationError, JWT::DecodeError => e
-    Rails.logger.error "InvalidTokenError: #{e.inspect}"
-    error = Error.new('Bad credentials', :unauthorized)
+    Rails.logger.error "Auth0ClientInvalidTokenError: #{e.inspect}"
+    error = Error.new(I18n.t('errors.messages.invalid_token'), :unauthorized)
     Response.new(nil, error)
   end
 

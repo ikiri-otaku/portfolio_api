@@ -1,0 +1,28 @@
+ja:
+  activerecord:
+    models:
+      organization_user: Organizationに属するユーザー
+      organization: Organization
+      tech: 技術
+      user_tech: ユーザーの技術歴
+      user: ユーザー
+    attributes:
+      organization_user:
+        organization_id: OrganizationID
+        user_id: ユーザーID
+      organization:
+        name: チーム名
+        github_username: GitHubのOrganization名
+      tech:
+        name: 技術名
+        parent_id: 関連技術のID
+        discarded_at: 削除日時
+      user_tech:
+        user_id: ユーザーID
+        tech_id: 技術ID
+        exp_months_job: 実務での使用歴
+        exp_months_hobby: 個人開発での使用歴
+      user:
+        name: ユーザー名
+        github_username: GitHubのユーザー名
+        auth0_id: Auth0のID
