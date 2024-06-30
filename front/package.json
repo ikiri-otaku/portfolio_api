@@ -40,6 +40,7 @@
     "eslint-config-next": "14.1.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-storybook": "^0.8.0",
+    "msw-storybook-addon": "^2.0.2",
     "postcss": "^8.4.38",
     "postcss-preset-mantine": "^1.14.4",
     "postcss-simple-vars": "^7.0.1",
