@@ -1,6 +1,8 @@
 class Auth::ApplicationController < ApplicationController
   before_action :authorize
 
+  attr_reader :current_user
+
   private
 
   def authorize
@@ -10,9 +12,12 @@ class Auth::ApplicationController < ApplicationController
 
     validation_response = Auth0Client.validate_token(token)
 
-    return unless (error = validation_response.error)
-
-    render json: { message: error.message }, status: error.status
+    if (error = validation_response.error)
+      render json: { message: error.message }, status: error.status
+    else
+      auth0_id = validation_response.decoded_token.first[:sub]
+      @current_user ||= User.find_by(auth0_id:) if auth0_id
+    end
   end
 
   def token_from_request

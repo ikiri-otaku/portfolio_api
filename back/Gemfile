@@ -54,6 +54,7 @@ end
 
 gem 'discard', '~> 1.2'
 gem 'jwt', '~> 2.5'
+gem 'octokit' # GitHub REST API
 gem 'rubocop', require: false
 gem 'rubocop-performance', require: false
 gem 'rubocop-rails', require: false
