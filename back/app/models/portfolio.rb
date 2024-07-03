@@ -1,6 +1,6 @@
 class Portfolio < ApplicationRecord
-  belongs_to :user
-  belongs_to :organization
+  belongs_to :user, optional: true
+  belongs_to :organization, optional: true
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :url, presence: true,
