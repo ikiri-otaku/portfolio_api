@@ -1,5 +1,7 @@
 class Profile < ApplicationRecord
   belongs_to :user
+  has_many :pictures, as: :imageable, dependent: :destroy
+
   validates :user_id, uniqueness: true
   validates :location, length: { maximum: 255 }
   validates :hireable, inclusion: { in: [true, false] }
