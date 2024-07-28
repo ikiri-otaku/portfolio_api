@@ -31,7 +31,9 @@ RSpec.describe PortfolioTech, type: :model do
         expect(another_portfolio_tech.errors[:portfolio_id]).to eq ['はすでに存在します']
       end
     end
+  end
 
+  describe 'アソシエーション' do
     describe '削除' do
       let(:portfolio) { FactoryBot.create(:portfolio, :with_tech) }
       it 'portfolio を削除した場合、削除されること' do
