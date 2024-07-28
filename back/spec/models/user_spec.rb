@@ -44,4 +44,29 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe 'アソシエーション' do
+    let!(:organization) { FactoryBot.create(:organization) }
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:portfolio) { FactoryBot.create(:portfolio, user:, organization:) }
+    before do
+      user.organizations << organization
+    end
+
+    it 'organizationに関連付けられていること' do
+      expect(user.organizations).to include(organization)
+    end
+
+    it 'userが複数のorganizationsに関連付けられること' do
+      organization2 = FactoryBot.create(:organization)
+      user.organizations << organization2
+      expect(user.organizations).to include(organization, organization2)
+    end
+
+    it 'userが削除された場合organizationの関連付けが削除される' do
+      user.destroy
+      expect(OrganizationUser.where(user_id: user.id).count).to eq 0
+      expect(Organization.where(id: organization.id).count).to eq 1
+    end
+  end
 end
