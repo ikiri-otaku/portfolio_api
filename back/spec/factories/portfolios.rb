@@ -15,5 +15,11 @@ FactoryBot.define do
         portfolio.save
       end
     end
+
+    trait :with_tech do
+      after(:create) do |portfolio|
+        portfolio.teches << FactoryBot.create(:tech) if portfolio.teches.blank?
+      end
+    end
   end
 end

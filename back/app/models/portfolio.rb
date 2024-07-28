@@ -1,8 +1,10 @@
 class Portfolio < ApplicationRecord
   attr_accessor :github_url, :tech_names
-  
+
   belongs_to :user, optional: true
   belongs_to :organization, optional: true
+  has_many :portfolio_teches, dependent: :destroy
+  has_many :teches, through: :portfolio_teches
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :url, presence: true,
