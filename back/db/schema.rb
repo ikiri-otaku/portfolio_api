@@ -29,6 +29,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_01_053542) do
     t.index ["github_username"], name: "index_organizations_on_github_username", unique: true
   end
 
+  create_table "portfolios", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "organization_id"
+    t.string "name", limit: 50, null: false
+    t.string "url", null: false
+    t.text "introduction"
+    t.integer "unhealthy_cnt", limit: 1, default: 0
+    t.datetime "latest_health_check_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_portfolios_on_organization_id"
+    t.index ["url"], name: "index_portfolios_on_url", unique: true
+    t.index ["user_id"], name: "index_portfolios_on_user_id"
+  end
+
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.text "introduction"
@@ -57,21 +72,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_01_053542) do
     t.datetime "updated_at", null: false
     t.index ["discarded_at"], name: "index_teches_on_discarded_at"
     t.index ["parent_id"], name: "index_teches_on_parent_id"
-  end
-
-  create_table "portfolios", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "organization_id"
-    t.string "name", limit: 50, null: false
-    t.string "url", null: false
-    t.text "introduction"
-    t.integer "unhealthy_cnt", limit: 1, default: 0
-    t.datetime "latest_health_check_time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["organization_id"], name: "index_portfolios_on_organization_id"
-    t.index ["url"], name: "index_portfolios_on_url", unique: true
-    t.index ["user_id"], name: "index_portfolios_on_user_id"
   end
 
   create_table "test_posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -103,10 +103,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_01_053542) do
 
   add_foreign_key "organization_users", "organizations"
   add_foreign_key "organization_users", "users"
+  add_foreign_key "portfolios", "organizations"
+  add_foreign_key "portfolios", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "teches", "teches", column: "parent_id"
   add_foreign_key "user_teches", "teches"
   add_foreign_key "user_teches", "users"
-  add_foreign_key "portfolios", "organizations"
-  add_foreign_key "portfolios", "users"
 end
