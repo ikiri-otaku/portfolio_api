@@ -6,7 +6,7 @@ class Portfolio < ApplicationRecord
   has_many :portfolio_teches, dependent: :destroy
   has_many :teches, through: :portfolio_teches
   has_many :likes, dependent: :destroy
-  has_many :favolits, through: :likes, source: :users
+  has_many :liking_users, through: :likes, source: :users
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :url, presence: true,
