@@ -42,7 +42,7 @@ RSpec.describe Like.type: :model do
         expect(Like.count).to eq 0
         expect(Portfolio.where(id: portfolio.id).count).to eq 1
       end
-      it 'tech を削除した場合、削除されること' do
+      it 'portfolio を削除した場合、削除されること' do
         like = user.portfolios.first
   
         portfolio.destroy!
