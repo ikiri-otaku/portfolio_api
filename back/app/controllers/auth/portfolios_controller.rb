@@ -5,7 +5,9 @@ class Auth::PortfoliosController < Auth::ApplicationController
     portfolio = current_user.portfolios.new(portfolio_params)
 
     # GitHubリポジトリ所有チェック
-    return render status: :unprocessable_entity, json: INVALID_GITHUB_URL unless portfolio.check_repo_owner?(current_user)
+    if portfolio.github_repository && !portfolio.github_repository&.check_repo_owner?(current_user)
+      return render status: :unprocessable_entity, json: INVALID_GITHUB_URL
+    end
 
     # ヘルスチェック
     portfolio.health_check
@@ -29,7 +31,7 @@ class Auth::PortfoliosController < Auth::ApplicationController
       :name,
       :url,
       :introduction,
-      :github_url # TODO: GithubRepository
+      :github_url
       # :tech_names TODO
     )
   end

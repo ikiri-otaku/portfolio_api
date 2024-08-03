@@ -1,8 +1,9 @@
 class Portfolio < ApplicationRecord
-  attr_accessor :github_url, :tech_names
-  
+  attr_accessor :tech_names
+
   belongs_to :user, optional: true
   belongs_to :organization, optional: true
+  has_one :github_repository, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :url, presence: true,
@@ -11,18 +12,23 @@ class Portfolio < ApplicationRecord
     format: { with: URI::DEFAULT_PARSER.make_regexp(['http', 'https']) }
   validates :unhealthy_cnt, numericality: { only_integer: true, less_than_or_equal_to: 4, greater_than_or_equal_to: 0 }
 
-  def check_repo_owner?(user)
-    return true if github_url.blank?
+  def github_url
+    return unless github_repository
 
-    repo_info = GithubClient.get_owner_and_repo(github_url)
-    return false unless repo_info
+    "#{ENV.fetch('GITHUB_DOMAIN', nil)}/#{github_repository.owner}/#{github_repository.repo}"
+  end
 
-    github_client = GithubClient.new
-    if user.github_username == repo_info[0]
-      github_client.repository_exists?(repo_info[0], repo_info[1])
-    else
-      github_client.collaborator?(repo_info[0], repo_info[1], user.github_username)
+  def github_url=(url)
+    # NOTE: 一度設定したら変更不可
+    return if github_repository || url.blank?
+
+    repo_info = GithubClient.get_owner_and_repo(url)
+    unless repo_info
+      errors.add(:github_url, I18n.t('errors.messages.repository_top'))
+      raise ActiveRecord::RecordInvalid, self
     end
+
+    build_github_repository(owner: repo_info[0], repo: repo_info[1])
   end
 
   def health_check
@@ -36,14 +42,14 @@ class Portfolio < ApplicationRecord
   end
 
   def save_associations! # rubocop:disable Metrics/AbcSize
-    repo_info = GithubClient.get_owner_and_repo(github_url)
     ActiveRecord::Base.transaction do
-      if new_record? && (repo_info && user.github_username != repo_info[0])
+      if github_repository&.changed? && (user.github_username != github_repository.owner)
         # Organization作成
-        self.organization = Organization.find_by(github_username: repo_info[0]) || Organization.new(name: repo_info[0], github_username: repo_info[0])
+        self.organization =
+          Organization.find_by(github_username: github_repository.owner) ||
+          Organization.new(name: github_repository.owner, github_username: github_repository.owner)
         user.organizations << organization unless user.organizations.include?(organization)
       end
-      # TODO: GithubRepository作成
       # TODO: PortfolioTech保存
       save!
     end
