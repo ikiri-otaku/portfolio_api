@@ -130,7 +130,7 @@ export default function Home() {
         <SimpleGrid cols={3} spacing="lg">
           <Card shadow="sm" padding="lg" radius="md" withBorder>
             <Card.Section p="sm">
-              <Image src="/test.jpg" height={160} alt="BUZZ BASE" />
+              <Image src="/articletest.jpg" height={160} alt="BUZZ BASE" />
             </Card.Section>
             <Text fw={700} size="xl">
               記事タイトル記事タイトル記事タイトル
@@ -138,7 +138,7 @@ export default function Home() {
           </Card>
           <Card shadow="sm" padding="lg" radius="md" withBorder>
             <Card.Section p="sm">
-              <Image src="/test.jpg" height={160} alt="BUZZ BASE" />
+              <Image src="/articletest.jpg" height={160} alt="BUZZ BASE" />
             </Card.Section>
             <Text fw={700} size="xl">
               記事タイトル記事タイトル記事タイトル
@@ -146,7 +146,7 @@ export default function Home() {
           </Card>
           <Card shadow="sm" padding="lg" radius="md" withBorder>
             <Card.Section p="sm">
-              <Image src="/test.jpg" height={160} alt="BUZZ BASE" />
+              <Image src="/articletest.jpg" height={160} alt="BUZZ BASE" />
             </Card.Section>
             <Text fw={700} size="xl">
               記事タイトル記事タイトル記事タイトル
