@@ -1,6 +1,6 @@
 import { Select } from "@mantine/core";
 import { useState } from "react";
-import classes from "./searchForm.module.css";
+import classes from "./profileForm.module.css";
 
 const prefectures = [
   { value: 'hokkaido', label: '北海道' },

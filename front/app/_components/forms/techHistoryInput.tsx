@@ -1,6 +1,6 @@
 import { Select } from "@mantine/core";
 import { useState } from "react";
-import classes from "./searchForm.module.css";
+import classes from "./profileForm.module.css";
 
 const techHisories = [
   { value: 'oneToTwoYears', label: '1〜2年' },

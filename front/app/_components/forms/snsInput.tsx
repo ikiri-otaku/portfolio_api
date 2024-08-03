@@ -1,5 +1,5 @@
 import { TextInput } from "@mantine/core";
-import classes from "./searchForm.module.css";
+import classes from "./profileForm.module.css";
 
 interface SnsInputProps {
   width: number;

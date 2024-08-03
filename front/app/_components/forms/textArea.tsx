@@ -1,5 +1,5 @@
 import { Textarea } from "@mantine/core";
-import classes from "./searchForm.module.css";
+import classes from "./profileForm.module.css";
 
 export default function UserInput({ width, height }: { width: number, height: number }) {
   return (
