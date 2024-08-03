@@ -20,7 +20,7 @@ class Portfolio < ApplicationRecord
 
   def github_url=(url)
     # NOTE: 一度設定したら変更不可
-    return if github_repository || url.blank?
+    return if url.blank?
 
     repo_info = GithubClient.get_owner_and_repo(url)
     unless repo_info
@@ -28,7 +28,11 @@ class Portfolio < ApplicationRecord
       raise ActiveRecord::RecordInvalid, self
     end
 
-    build_github_repository(owner: repo_info[0], repo: repo_info[1])
+    if github_repository
+      github_repository.attributes = { owner: repo_info[0], repo: repo_info[1] }
+    else
+      build_github_repository(owner: repo_info[0], repo: repo_info[1])
+    end
   end
 
   def health_check
@@ -51,6 +55,7 @@ class Portfolio < ApplicationRecord
         user.organizations << organization unless user.organizations.include?(organization)
       end
       # TODO: PortfolioTech保存
+      github_repository.save! if github_repository&.changed?
       save!
     end
   end
