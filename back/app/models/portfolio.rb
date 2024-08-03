@@ -59,4 +59,14 @@ class Portfolio < ApplicationRecord
       save!
     end
   end
+
+  def to_api_response
+    {
+      name:,
+      url:,
+      introduction:,
+      created_date: created_at.strftime('%Y/%m/%d'),
+      creator: organization&.name || user&.name
+    }
+  end
 end
