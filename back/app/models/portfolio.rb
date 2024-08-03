@@ -1,6 +1,4 @@
 class Portfolio < ApplicationRecord
-  before_destroy :check_user_dependency
-
   attr_accessor :tech_names
 
   belongs_to :user, optional: true
@@ -47,17 +45,13 @@ class Portfolio < ApplicationRecord
     ActiveRecord::Base.transaction do
       if github_repository&.changed? && (user.github_username != github_repository.owner)
         # Organization作成
-        self.organization = Organization.find_by(github_username: github_repository.owner) || Organization.new(name: github_repository.owner, github_username: github_repository.owner)
+        self.organization =
+          Organization.find_by(github_username: github_repository.owner) ||
+          Organization.new(name: github_repository.owner, github_username: github_repository.owner)
         user.organizations << organization unless user.organizations.include?(organization)
       end
       # TODO: PortfolioTech保存
       save!
     end
-  end
-
-  private
-
-  def check_user_dependency
-    throw(:abort) if organization.present?
   end
 end

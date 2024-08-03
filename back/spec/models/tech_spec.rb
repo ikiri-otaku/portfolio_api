@@ -11,7 +11,7 @@ RSpec.describe Tech, type: :model do
       it 'name が空の場合エラーになること' do
         tech.name = nil
         expect(tech.valid?).to be false
-        expect(tech.errors[:name]).to eq ["can't be blank"]
+        expect(tech.errors[:name]).to eq ['を入力してください']
       end
     end
 
@@ -21,7 +21,7 @@ RSpec.describe Tech, type: :model do
         expect(tech.valid?).to be true
         tech.name = 'a' * 21
         expect(tech.valid?).to be false
-        expect(tech.errors[:name]).to eq ['is too long (maximum is 20 characters)']
+        expect(tech.errors[:name]).to eq ['は20文字以内で入力してください']
       end
     end
 
