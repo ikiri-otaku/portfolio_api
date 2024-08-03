@@ -10,13 +10,13 @@ RSpec.describe UserTech, type: :model do
         user_tech = UserTech.new(tech:)
         expect(user_tech.valid?).to be false
         expect(user_tech.errors.size).to eq 1
-        expect(user_tech.errors[:user]).to eq ['must exist']
+        expect(user_tech.errors[:user]).to eq ['を入力してください']
       end
       it 'tech が空の場合エラーになること' do
         user_tech = UserTech.new(user:)
         expect(user_tech.valid?).to be false
         expect(user_tech.errors.size).to eq 1
-        expect(user_tech.errors[:tech]).to eq ['must exist']
+        expect(user_tech.errors[:tech]).to eq ['を入力してください']
       end
     end
 
@@ -27,7 +27,7 @@ RSpec.describe UserTech, type: :model do
         another_user_tech = UserTech.new(user:, tech:)
         expect(another_user_tech.valid?).to be false
         expect(another_user_tech.errors.size).to eq 1
-        expect(another_user_tech.errors[:user_id]).to eq ['has already been taken']
+        expect(another_user_tech.errors[:user_id]).to eq ['はすでに存在します']
       end
     end
 
@@ -39,7 +39,7 @@ RSpec.describe UserTech, type: :model do
         user_tech.exp_months_job = -1
         expect(user_tech.valid?).to be false
         expect(user_tech.errors.size).to eq 1
-        expect(user_tech.errors[:exp_months_job]).to eq ['must be in 0..99']
+        expect(user_tech.errors[:exp_months_job]).to eq ['は0..99の範囲に含めてください']
       end
       it 'exp_months_job の値が99以下でない場合エラーになること' do
         user_tech = UserTech.new(user:, tech:, exp_months_job: 99)
@@ -48,7 +48,7 @@ RSpec.describe UserTech, type: :model do
         user_tech.exp_months_job = 100
         expect(user_tech.valid?).to be false
         expect(user_tech.errors.size).to eq 1
-        expect(user_tech.errors[:exp_months_job]).to eq ['must be in 0..99']
+        expect(user_tech.errors[:exp_months_job]).to eq ['は0..99の範囲に含めてください']
       end
 
       it 'exp_months_hobby の値が0以上でない場合エラーになること' do
@@ -58,7 +58,7 @@ RSpec.describe UserTech, type: :model do
         user_tech.exp_months_hobby = -1
         expect(user_tech.valid?).to be false
         expect(user_tech.errors.size).to eq 1
-        expect(user_tech.errors[:exp_months_hobby]).to eq ['must be in 0..99']
+        expect(user_tech.errors[:exp_months_hobby]).to eq ['は0..99の範囲に含めてください']
       end
       it 'exp_months_hobby の値が99以下でない場合エラーになること' do
         user_tech = UserTech.new(user:, tech:, exp_months_hobby: 99)
@@ -67,7 +67,7 @@ RSpec.describe UserTech, type: :model do
         user_tech.exp_months_hobby = 100
         expect(user_tech.valid?).to be false
         expect(user_tech.errors.size).to eq 1
-        expect(user_tech.errors[:exp_months_hobby]).to eq ['must be in 0..99']
+        expect(user_tech.errors[:exp_months_hobby]).to eq ['は0..99の範囲に含めてください']
       end
     end
   end

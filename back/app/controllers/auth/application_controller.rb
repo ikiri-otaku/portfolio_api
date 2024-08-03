@@ -1,14 +1,6 @@
 class Auth::ApplicationController < ApplicationController
   before_action :authorize
 
-  REQUIRES_AUTHENTICATION = { message: 'Requires authentication' }.freeze
-  BAD_CREDENTIALS = { message: 'Bad credentials' }.freeze
-  MALFORMED_AUTHORIZATION_HEADER = {
-    error: 'invalid_request',
-    error_description: 'Authorization header value must follow this format: Bearer access-token',
-    message: 'Bad credentials'
-  }.freeze
-
   attr_reader :current_user
 
   private
@@ -31,13 +23,16 @@ class Auth::ApplicationController < ApplicationController
   def token_from_request
     authorization_header_elements = request.headers['Authorization']&.split
 
-    render json: REQUIRES_AUTHENTICATION, status: :unauthorized and return unless authorization_header_elements
+    render json: { message: I18n.t('errors.messages.requires_authentication') }, status: :unauthorized and return unless authorization_header_elements
 
-    render json: MALFORMED_AUTHORIZATION_HEADER, status: :unauthorized and return unless authorization_header_elements.length == 2
+    unless authorization_header_elements.length == 2
+      render json: { message: I18n.t('errors.messages.malformed_authorization_header') },
+        status: :unauthorized and return
+    end
 
     scheme, token = authorization_header_elements
 
-    render json: BAD_CREDENTIALS, status: :unauthorized and return unless scheme.downcase == 'bearer'
+    render json: { message: I18n.t('errors.messages.bad_credentials') }, status: :unauthorized and return unless scheme.downcase == 'bearer'
 
     token
   end
