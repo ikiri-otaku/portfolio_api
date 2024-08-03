@@ -11,6 +11,7 @@ import Article from '@/app/_components/buttons/article';
 import Keep from '@/app/_components/buttons/keep';
 import { TrushIcon } from '@/app/_components/icons/trushIcon';
 import DeleteAccount from '@/app/_components/buttons/deleteAccount';
+import TechHistorySelect from '@/app/_components/forms/techHistoryInput';
 
 export default function Home() {
   return (
@@ -46,16 +47,10 @@ export default function Home() {
         <h1 className="text-2xl text-left font-bold my-4">技術歴</h1>
         <div className="flex items-end space-x-2">
           <div>
-            <p>技術</p>
             <SnsInput width={250} placeholder="Ruby" />
           </div>
           <div>
-            <p>歴（年）</p>
-            <SnsInput width={70} placeholder="1" />
-          </div>
-          <div>
-            <p>歴（月）</p>
-            <SnsInput width={70} placeholder="1" />
+            <TechHistorySelect width={160} />
           </div>
           <div>
             <TrushIcon width="45" height="45" />

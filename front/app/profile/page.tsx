@@ -3,6 +3,7 @@ import { MantineProvider, Card, Image, Text, SimpleGrid } from '@mantine/core';
 import theme from '../_constants/customTheme';
 import Share from '../_components/buttons/share';
 import EditProfile from '../_components/buttons/editProfile';
+import TechHistoryBadge from '../_components/badges/techHistoryBadge';
 import { LocationIcon } from '../_components/icons/locationIcon';
 import { CompanyIcon } from '../_components/icons/companyIcon';
 import { UserIcon } from '../_components/icons/userIcon';
@@ -11,6 +12,7 @@ import { ZennIcon } from '../_components/icons/zennIcon';
 import { XIcon } from '../_components/icons/xIcon';
 import { QiitaIcon } from '../_components/icons/qiitaIcon';
 import { AtcoderIcon } from '../_components/icons/atcoderIcon';
+import { RubyIcon } from '../_components/techIcons/rubyIcon';
 
 export default function Home() {
   return (
@@ -56,12 +58,29 @@ export default function Home() {
           同意と心もの多くです。私を皆にご著作として彼ら実践できる表現をどうようにとしてもご表現忘れらないなは、ついに同期にもすぐになってきて多くなもののしあん。
         </p>
         <h1 className="text-2xl text-left font-bold my-4">技術歴</h1>
+        <TechHistoryBadge
+          icon={<RubyIcon width="20" height="20" />}
+          label="Ruby"
+          duration="1年3ヶ月"
+        />
         <h1 className="text-2xl text-left font-bold my-4">アプリ</h1>
         <SimpleGrid cols={3} spacing="lg">
           <Card shadow="sm" padding="lg" radius="md" withBorder>
             <Text fw={700} size="xl">
               アプリタイトルアプリタイトル
             </Text>
+            <div className="flex space-x-2">
+              <Image
+                src="/ruby.png"
+                alt="BUZZ BASE"
+                style={{ width: '30px', height: '30px', objectFit: 'contain' }}
+              />
+              <Image
+                src="/rails.png"
+                alt="BUZZ BASE"
+                style={{ width: '30px', height: '30px', objectFit: 'contain' }}
+              />
+            </div>
             <Card.Section p="sm">
               <Image src="/apptest.png" height={160} radius="xl" alt="BUZZ BASE" />
             </Card.Section>
@@ -70,6 +89,18 @@ export default function Home() {
             <Text fw={700} size="xl">
               アプリタイトルアプリタイトル
             </Text>
+            <div className="flex space-x-2">
+              <Image
+                src="/ruby.png"
+                alt="BUZZ BASE"
+                style={{ width: '30px', height: '30px', objectFit: 'contain' }}
+              />
+              <Image
+                src="/rails.png"
+                alt="BUZZ BASE"
+                style={{ width: '30px', height: '30px', objectFit: 'contain' }}
+              />
+            </div>
             <Card.Section p="sm">
               <Image src="/apptest.png" height={160} radius="xl" alt="BUZZ BASE" />
             </Card.Section>
@@ -78,6 +109,18 @@ export default function Home() {
             <Text fw={700} size="xl">
               アプリタイトルアプリタイトル
             </Text>
+            <div className="flex space-x-2">
+              <Image
+                src="/ruby.png"
+                alt="BUZZ BASE"
+                style={{ width: '30px', height: '30px', objectFit: 'contain' }}
+              />
+              <Image
+                src="/rails.png"
+                alt="BUZZ BASE"
+                style={{ width: '30px', height: '30px', objectFit: 'contain' }}
+              />
+            </div>
             <Card.Section p="sm">
               <Image src="/apptest.png" height={160} radius="xl" alt="BUZZ BASE" />
             </Card.Section>
