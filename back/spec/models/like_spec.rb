@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Like.type: :model do
+RSpec.describe Like, type: :model do
   describe 'バリデーション' do
     let(:user) { FactoryBot.create(:user) }
     let(:portfolio) { FactoryBot.create(:portfolio) }
@@ -22,7 +22,7 @@ RSpec.describe Like.type: :model do
 
     describe '重複' do
       it 'userとportfolio の組み合わせが重複する場合エラーになること' do
-        user.portfolios << portfolio
+        Like.create(user:, portfolio:)
 
         another_like = Like.new(user:, portfolio:)
         expect(another_like.valid?).to be false
@@ -31,24 +31,30 @@ RSpec.describe Like.type: :model do
       end
     end
   end
+
   describe 'アソシエーション' do
     describe '削除' do
-      let(:user) { FactoryBot.create(:user, :like) }
-      it 'user を削除した場合、削除されること' do
-        like = user.portfolios.first
-  
-        user.destroy!
-        expect(User.count).to eq 0
-        expect(Like.count).to eq 0
-        expect(Portfolio.where(id: portfolio.id).count).to eq 1
+      let!(:user) { FactoryBot.create(:user) }
+      let!(:portfolio) { FactoryBot.create(:portfolio, user:) }
+
+      before do
+        user.likes.create!(portfolio:)
       end
-      it 'portfolio を削除した場合、削除されること' do
-        like = user.portfolios.first
-  
-        portfolio.destroy!
-        expect(User.where(id: user.id).count).to eq 1
-        expect(Like.count).to eq 0
-        expect(Portfolio.count).to eq 0
+
+      context 'user を削除した場合' do
+        it '関連する likes が削除されること' do
+          expect { user.destroy! }.to change { Like.count }.from(1).to(0)
+          expect(User.count).to eq 0
+          expect(Portfolio.where(id: portfolio.id).count).to eq 1
+        end
+      end
+
+      context 'portfolio を削除した場合' do
+        it '関連する likes が削除されること' do
+          expect { portfolio.destroy! }.to change { Like.count }.from(1).to(0)
+          expect(User.where(id: user.id).count).to eq 1
+          expect(Portfolio.count).to eq 0
+        end
       end
     end
   end

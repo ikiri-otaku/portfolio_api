@@ -9,11 +9,5 @@ FactoryBot.define do
         user.teches << FactoryBot.create(:tech) if user.teches.blank?
       end
     end
-
-    trait :like do
-      after(:create) do |user|
-        user.portfolios << FactoryBot.create(:portfolio) if user.portfolios.blank?
-      end
-    end
   end
 end
