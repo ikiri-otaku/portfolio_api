@@ -38,6 +38,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_16_035836) do
     t.index ["github_username"], name: "index_organizations_on_github_username", unique: true
   end
 
+  create_table "portfolio_teches", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "portfolio_id", null: false
+    t.bigint "tech_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["portfolio_id", "tech_id"], name: "index_portfolio_teches_on_portfolio_id_and_tech_id", unique: true
+    t.index ["portfolio_id"], name: "index_portfolio_teches_on_portfolio_id"
+    t.index ["tech_id"], name: "index_portfolio_teches_on_tech_id"
+  end
+
   create_table "portfolios", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "organization_id"
@@ -113,6 +123,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_16_035836) do
   add_foreign_key "github_repositories", "portfolios"
   add_foreign_key "organization_users", "organizations"
   add_foreign_key "organization_users", "users"
+  add_foreign_key "portfolio_teches", "portfolios"
+  add_foreign_key "portfolio_teches", "teches"
   add_foreign_key "portfolios", "organizations"
   add_foreign_key "portfolios", "users"
   add_foreign_key "profiles", "users"
