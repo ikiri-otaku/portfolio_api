@@ -87,6 +87,13 @@ RSpec.describe Portfolio, type: :model do
       organization.destroy
       expect(portfolio.reload.organization).to be_nil
     end
+
+    describe 'github_repository' do
+      let!(:github_repository) { FactoryBot.create(:github_repository) }
+      it 'portfolio を削除すると github_repository を同時に削除すること' do
+        expect { github_repository.portfolio.destroy! }.to change { GithubRepository.count }.by(-1)
+      end
+    end
   end
 
   describe 'メソッド' do
@@ -94,40 +101,32 @@ RSpec.describe Portfolio, type: :model do
     let(:user_with_org) { organization.users.first }
     let(:user_no_org) { FactoryBot.create(:user) }
 
-    describe '#check_repo_owner?' do
+    describe '#github_url' do
       let(:portfolio) { FactoryBot.build(:portfolio) }
-      it 'github_urlが空の場合、trueを返す' do
-        portfolio.github_url = ''
-        expect(portfolio.check_repo_owner?(user_no_org)).to be true
+      it 'github_repository が紐づかない場合、nilを返す' do
+        expect(portfolio.github_url).to be nil
       end
-      it 'github_urlが不正な場合、falseを返す' do
-        portfolio.github_url = 'https://example.github.com/'
-        expect(portfolio.check_repo_owner?(user_no_org)).to be false
+      it 'github_repository が紐づく場合、URLを返す' do
+        portfolio.build_github_repository(owner: 'owner', repo: 'repo')
+        expect(portfolio.github_url).to eq "#{ENV.fetch('GITHUB_DOMAIN', nil)}/owner/repo"
       end
-      it '自身のリポジトリに存在しない場合、falseを返す' do
-        allow_any_instance_of(Octokit::Client).to receive(:repository?).and_return(false)
-        portfolio.github_url = "https://example.github.com/#{user_no_org.github_username}/repo"
-        expect(portfolio.check_repo_owner?(user_no_org)).to be false
+    end
+
+    describe '#github_url=' do
+      let(:portfolio) { FactoryBot.build(:portfolio) }
+      it 'github_urlが不正な場合、例外をスローする' do
+        expect do
+          portfolio.github_url = 'https://example.github.com/'
+        end.to raise_error(ActiveRecord::RecordInvalid, /バリデーションに失敗しました: GitHub URLはリポジトリのトップページを指定してください/)
+        expect do
+          portfolio.github_url = 'https://example.github.com/owner/repo/1'
+        end.to raise_error(ActiveRecord::RecordInvalid, /バリデーションに失敗しました: GitHub URLはリポジトリのトップページを指定してください/)
       end
-      it '自身のリポジトリに存在する場合、trueを返す' do
-        allow_any_instance_of(Octokit::Client).to receive(:repository?).and_return(true)
-        portfolio.github_url = "https://example.github.com/#{user_no_org.github_username}/repo"
-        expect(portfolio.check_repo_owner?(user_no_org)).to be true
-      end
-      it '自身がownerでない存在しないリポジトリの場合、例外を投げる' do
-        allow_any_instance_of(Octokit::Client).to receive(:collaborator?).and_raise(Octokit::NotFound)
-        portfolio.github_url = "https://example.github.com/#{organization.github_username}/repo"
-        expect(portfolio.check_repo_owner?(user_no_org)).to be false
-      end
-      it 'チームのコラボレーターでない場合、falseを返す' do
-        allow_any_instance_of(Octokit::Client).to receive(:collaborator?).and_return(false)
-        portfolio.github_url = "https://example.github.com/#{organization.github_username}/repo"
-        expect(portfolio.check_repo_owner?(user_no_org)).to be false
-      end
-      it 'チームのコラボレーターである場合、trueを返す' do
-        allow_any_instance_of(Octokit::Client).to receive(:collaborator?).and_return(true)
-        portfolio.github_url = "https://example.github.com/#{organization.github_username}/repo"
-        expect(portfolio.check_repo_owner?(user_with_org)).to be true
+      it 'github_urlが正常な場合、github_repositoryを紐づける' do
+        portfolio.github_url = 'https://example.github.com/owner/repo?id=100'
+        expect(portfolio.github_repository.owner).to eq 'owner'
+        expect(portfolio.github_repository.repo).to eq 'repo'
+        expect(portfolio.github_url).to eq "#{ENV.fetch('GITHUB_DOMAIN', nil)}/owner/repo"
       end
     end
 
