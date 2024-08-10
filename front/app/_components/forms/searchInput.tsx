@@ -1,7 +1,7 @@
-import { ArrowRightIcon } from "@/app/_components/icons/arrowRightIcon";
-import { SearchIcon } from "@/app/_components/icons/searchIcon";
-import { TextInput } from "@mantine/core";
-import classes from "./searchForm.module.css";
+import { ArrowRightIcon } from '@/app/_components/icons/arrowRightIcon';
+import { SearchIcon } from '@/app/_components/icons/searchIcon';
+import { TextInput } from '@mantine/core';
+import classes from './searchForm.module.css';
 
 export default function SearchInput() {
   return (
@@ -9,16 +9,16 @@ export default function SearchInput() {
       radius="xl"
       size="md"
       placeholder="Search"
-      bg="white.3"
+      bg="white.2"
       rightSectionWidth={42}
       leftSectionPointerEvents="none"
       leftSection={<SearchIcon width="18px" height="18px" stroke="#CED4DA" />}
       rightSection={
-        <button className="flex justify-center items-center w-8 h-8 bg-main relative rounded-full">
+        <button className="relative flex h-8 w-8 items-center justify-center rounded-full bg-main">
           <ArrowRightIcon width="18px" height="18px" fill="#CED4DA" />
         </button>
       }
-      classNames={classes}
+      classNames={{ input: classes.input }}
     />
   );
 }
