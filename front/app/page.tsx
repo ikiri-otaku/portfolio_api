@@ -1,11 +1,11 @@
 import { MantineProvider } from '@mantine/core';
 import List from './_components/buttons/list';
 import Submission from './_components/buttons/submission';
-import TestFileUploader from './_components/forms/fileUploader';
 import theme from './_constants/customTheme';
 import AuthButtons from './_layouts/nav/auth_buttons';
 import TestPostUI from './_services/testPost';
 import Header from '@/app/_layouts/header';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -14,7 +14,8 @@ export default function Home() {
       <AuthButtons />
       <List />
       <TestPostUI />
-      <TestFileUploader />
+      <Link href="/test_s3">S3 Test Page⇒</Link>
+
       <section className="flex flex-col items-center justify-center pb-14 pt-[86px]">
         <h2 className="text-center text-2xl font-black leading-snug text-textBlack">
           キャッチコピーキャッチコピー
