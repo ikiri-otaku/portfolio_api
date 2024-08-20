@@ -46,7 +46,7 @@ RSpec.describe Like, type: :model do
         expect(User.count).to eq 0
         expect(Portfolio.where(id: portfolio.id).count).to eq 1
       end
-      
+
       it 'portfolio を削除した場合関連する likes が削除されること' do
         expect { portfolio.destroy! }.to change { Like.count }.from(1).to(0)
         expect(User.where(id: user.id).count).to eq 1
