@@ -7,12 +7,23 @@ FactoryBot.define do
     unhealthy_cnt { 0 }
     latest_health_check_time { Time.current }
 
+    trait :required_fields do
+      organization_id { nil }
+      introduction { nil }
+    end
+
     trait :with_organization do
       after(:create) do |portfolio|
         organization = FactoryBot.create(:organization)
         portfolio.user.organizations << organization
         portfolio.organization = organization
         portfolio.save
+      end
+    end
+
+    trait :with_tech do
+      after(:create) do |portfolio|
+        portfolio.teches << FactoryBot.create(:tech) if portfolio.teches.blank?
       end
     end
   end

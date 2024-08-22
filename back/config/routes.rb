@@ -7,12 +7,14 @@ Rails.application.routes.draw do
 
   # 認証が必要なルーティングはここ
   namespace :auth do
-    resource :portfolios, only: %i[create update destroy]
+    resources :portfolios, only: %i[show create update destroy] do
+      resource :likes, only: %i[create destroy]
+    end
     resource :user, only: %i[create destroy]
   end
 
   # 認証が不要なルーティングはここ
-  resource :portfolios, only: %i[show]
+  resources :portfolios, only: %i[show]
   resources :teches, only: %i[index]
   resources :test_posts, only: %i[index]
   # Defines the root path route ('/')

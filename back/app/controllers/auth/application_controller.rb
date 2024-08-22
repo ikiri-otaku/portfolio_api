@@ -16,7 +16,7 @@ class Auth::ApplicationController < ApplicationController
       render json: { message: error.message }, status: error.status
     else
       auth0_id = validation_response.decoded_token.first[:sub]
-      @current_user ||= User.find_by(auth0_id:) if auth0_id
+      @current_user ||= User.find_by(auth0_id:)
     end
   end
 
