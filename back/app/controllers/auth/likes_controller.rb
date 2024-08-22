@@ -3,7 +3,7 @@ class Auth::LikesController < Auth::ApplicationController
 
   # POST /auth/portfolios/:portfolio_id/likes
   def create
-    if @portfolio.likes.where(user: current_user).exists?
+    if @portfolio.likes.exists?(user: current_user)
       render json: { message: '既に「いいね」されています' }, status: :unprocessable_entity
     else
       @portfolio.likes.create!(user: current_user)
