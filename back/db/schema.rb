@@ -28,6 +28,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_29_021322) do
     t.datetime "discarded_at"
     t.index ["discarded_at"], name: "index_likes_on_discarded_at"
     t.index ["portfolio_id"], name: "index_likes_on_portfolio_id"
+    t.index ["user_id", "portfolio_id"], name: "index_likes_on_user_id_and_portfolio_id", unique: true
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
