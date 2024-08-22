@@ -35,7 +35,7 @@ RSpec.describe 'Auth::LikesController', type: :request do
   end
 
   describe 'DELETE /auth/portfolios/:portfolio_id/likes' do
-    context '「いいね」が存在する場合' do
+    context '「いいね」している場合' do
       before { portfolio.likes.create!(user:) }
 
       it '「いいね」を削除し、ステータス200を返す' do
@@ -47,7 +47,7 @@ RSpec.describe 'Auth::LikesController', type: :request do
       end
     end
 
-    context '「いいね」が存在しない場合' do
+    context '「いいね」をしていない場合' do
       it '「いいね」を削除せず、ステータス404を返す' do
         expect do
           delete "/auth/portfolios/#{portfolio.id}/likes", headers:
