@@ -5,8 +5,8 @@ import theme from './_constants/customTheme';
 import AuthButtons from './_layouts/nav/auth_buttons';
 import TestPostUI from './_services/testPost';
 import Header from '@/app/_layouts/header';
-import { LikeOffIcon } from './_components/icons/likeOff';
-import { LikeOnIcon } from './_components/icons/likeOn';
+import LikeButton from './_components/buttons/likeButton';
+import { mockPortfolioId } from './_mockData/portfolioId';
 
 export default function Home() {
   return (
@@ -27,8 +27,7 @@ export default function Home() {
         <p className="mb-[34px] mt-6 text-base font-bold leading-snug text-textGray">
           キャッチコピーキャッチコピーキャッチコピーキャッチコピキャッチコピーキャッチコピー
         </p>
-        <LikeOffIcon width='20px' height='20px'/>
-        <LikeOnIcon width='20px' height='20px'/>
+        <LikeButton portfolioId={mockPortfolioId} />
         <Submission />
       </section>
     </MantineProvider>
