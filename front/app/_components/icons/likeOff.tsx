@@ -1,6 +1,6 @@
 export const LikeOffIcon = ({
-  height = "",
-  width = "",
+  height = "16",
+  width = "16",
   fill = "none",
   stroke = "#171717",
 }) => {

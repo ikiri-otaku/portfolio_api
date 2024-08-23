@@ -1,6 +1,6 @@
 export const LikeOnIcon = ({
-  height = "",
-  width = "",
+  height = "16",
+  width = "16",
   fill = "#F01879",
   stroke = "",
 }) => {
