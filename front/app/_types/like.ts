@@ -1,1 +1,1 @@
-export type PortfolioId = string;
+export type PortfolioId = number;

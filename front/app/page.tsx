@@ -6,7 +6,6 @@ import AuthButtons from './_layouts/nav/auth_buttons';
 import TestPostUI from './_services/testPost';
 import Header from '@/app/_layouts/header';
 import LikeButton from './_components/buttons/likeButton';
-import { mockPortfolioId } from './_mockData/portfolioId';
 
 export default function Home() {
   return (
@@ -27,7 +26,7 @@ export default function Home() {
         <p className="mb-[34px] mt-6 text-base font-bold leading-snug text-textGray">
           キャッチコピーキャッチコピーキャッチコピーキャッチコピキャッチコピーキャッチコピー
         </p>
-        <LikeButton portfolioId={mockPortfolioId} />
+        <LikeButton portfolioId={1} />
         <Submission />
       </section>
     </MantineProvider>
