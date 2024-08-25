@@ -1,10 +1,8 @@
 import { PortfolioId } from "../_types/like";
 
-const API_BASE_URL = '/auth/portfolios';
-
 export async function addLike(portfolioId: PortfolioId) {
   try {
-    const response = await fetch(`${API_BASE_URL}/${portfolioId}/likes`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/portfolios/1/likes`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -24,7 +22,7 @@ export async function addLike(portfolioId: PortfolioId) {
 
 export async function removeLike(portfolioId: PortfolioId) {
   try {
-    const response = await fetch(`${API_BASE_URL}/${portfolioId}/likes`,{
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/portfolios/${portfolioId}/likes`,{
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
