@@ -5,6 +5,7 @@ class Portfolio < ApplicationRecord
   belongs_to :organization, optional: true
   has_many :portfolio_teches, dependent: :destroy
   has_many :teches, through: :portfolio_teches
+  has_many :bookmarks, dependent: :destroy
   has_one :github_repository, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 50 }
