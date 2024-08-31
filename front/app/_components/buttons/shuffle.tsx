@@ -7,13 +7,8 @@ export default function ShuffleButton() {
       color="violet.7"
       size="xs"
       radius="xl"
-      rightSection={<ShuffleIcon width='10px' height='10px' />}
+      rightSection={<ShuffleIcon width='15px' height='15px' />}
       style={{ 
-        width: '86px', 
-        height: '18px', 
-        fontSize: '10px',
-        paddingLeft: '6px',
-        paddingRight: '6px',
       }}
     >
       シャッフル
