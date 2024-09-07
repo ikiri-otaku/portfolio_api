@@ -12,7 +12,11 @@ Rails.application.routes.draw do
   end
 
   # 認証が不要なルーティングはここ
-  resources :portfolios, only: %i[show]
+  resources :portfolios, only: %i[show] do
+    collection do
+      get 'search'
+    end
+  end
   resources :teches, only: %i[index]
   resources :test_posts, only: %i[index]
   # Defines the root path route ('/')

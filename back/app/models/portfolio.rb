@@ -64,6 +64,7 @@ class Portfolio < ApplicationRecord
 
   def to_api_response
     {
+      id:,
       name:,
       url:,
       introduction:,

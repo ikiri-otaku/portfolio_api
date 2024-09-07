@@ -26,6 +26,11 @@ body {
   color: rgb(var(--foreground-rgb));
 }
 
+main {
+  margin-top: 80px;
+  padding: 2rem;
+}
+
 p {
   margin: 0;
 }
