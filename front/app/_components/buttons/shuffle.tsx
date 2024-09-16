@@ -1,4 +1,4 @@
-import { ShuffleIcon } from "../icons/shuffleIcon";
+import { ShuffleIcon } from "@/app/_components/icons/shuffleIcon";
 import { Button } from "@mantine/core";
 
 export default function ShuffleButton() {
