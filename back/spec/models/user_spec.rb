@@ -49,11 +49,9 @@ RSpec.describe User, type: :model do
     let!(:organization) { FactoryBot.create(:organization) }
     let!(:user) { FactoryBot.create(:user) }
     let!(:portfolio) { FactoryBot.create(:portfolio, user:, organization:) }
-    before do
-      user.organizations << organization
-    end
 
     before do
+      user.organizations << organization
       user.portfolios << portfolio
     end
 
