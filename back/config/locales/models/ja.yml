@@ -1,18 +1,27 @@
 ja:
   activerecord:
     models:
+      github_repository: GitHubレポジトリ
       organization_user: Organizationに属するユーザー
       organization: Organization
+      portfolio: アプリ
       tech: 技術
       user_tech: ユーザーの技術歴
       user: ユーザー
     attributes:
+      github_repository:
+        portfolio: アプリ
+        portfolio_id: アプリID
+        owner: 所有者
+        repo: リポジトリ名
       organization_user:
         organization_id: OrganizationID
         user_id: ユーザーID
       organization:
         name: チーム名
         github_username: GitHubのOrganization名
+      portfolio:
+        github_url: GitHub URL
       tech:
         name: 技術名
         parent_id: 関連技術のID
@@ -26,3 +35,9 @@ ja:
         name: ユーザー名
         github_username: GitHubのユーザー名
         auth0_id: Auth0のID
+    errors:
+      models:
+        github_repository:
+          attributes:
+            base:
+              unchanged: 'GitHub URLは一度登録したら変更できません。'
