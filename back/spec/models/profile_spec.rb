@@ -101,4 +101,19 @@ RSpec.describe Profile, type: :model do
       end
     end
   end
+
+  describe 'アソシエーション' do
+    let(:profile) { FactoryBot.create(:profile, :with_picture) }
+    let(:picture) { profile.pictures.first }
+
+    it '削除すると、関連するデータも削除されること' do
+      profile.save!
+      expect(Picture.where(id: picture.id).count).to eq 1
+
+      profile.destroy!
+
+      expect(Profile.where(id: profile.id).count).to eq 0
+      expect(Picture.where(id: picture.id).count).to eq 0
+    end
+  end
 end
