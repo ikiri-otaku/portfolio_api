@@ -4,10 +4,10 @@ class Auth::LikesController < Auth::ApplicationController
   # POST /auth/portfolios/:portfolio_id/likes
   def create
     if @portfolio.likes.exists?(user: current_user)
-      render json: { message: '既に「いいね」されています' }, status: :unprocessable_entity
+      render json: status: :unprocessable_entity
     else
       @portfolio.likes.create!(user: current_user)
-      render json: { message: '「いいね」しました' }, status: :created
+      render json: status: :created
     end
   end
 
@@ -17,9 +17,9 @@ class Auth::LikesController < Auth::ApplicationController
 
     if like
       like.destroy!
-      render json: { message: '「いいね」を取り消しました' }, status: :ok
+      render json: status: :ok
     else
-      render json: { message: '「いいね」が見つかりません' }, status: :not_found
+      render json: status: :not_found
     end
   end
 
