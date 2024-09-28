@@ -13,6 +13,7 @@
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
     "@aws-sdk/client-s3": "^3.616.0",
+    "@aws-sdk/s3-request-presigner": "^3.633.0",
     "@mantine/core": "^7.8.0",
     "@mantine/hooks": "^7.8.0",
     "@tabler/icons-react": "^3.2.0",
