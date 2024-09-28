@@ -1,18 +1,10 @@
-import { MantineProvider } from '@mantine/core';
-import List from './_components/buttons/list';
-import Submission from './_components/buttons/submission';
-import theme from './_constants/customTheme';
-import AuthButtons from './_layouts/nav/auth_buttons';
-import TestPostUI from './_services/testPost';
-import Header from '@/app/_layouts/header';
 import Link from 'next/link';
+import Submission from '@/app/_components/buttons/submission';
+import TestPostUI from '@/app/_services/testPost';
 
 export default function Home() {
   return (
-    <MantineProvider theme={theme}>
-      <Header />
-      <AuthButtons />
-      <List />
+    <div>
       <TestPostUI />
       <Link href="/test_s3">S3 Test Page⇒</Link>
 
@@ -29,6 +21,6 @@ export default function Home() {
         </p>
         <Submission />
       </section>
-    </MantineProvider>
+    </div>
   );
 }

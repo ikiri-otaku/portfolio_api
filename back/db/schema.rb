@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_07_091732) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_28_131635) do
   create_table "github_repositories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "portfolio_id", null: false
     t.string "owner", limit: 50, null: false

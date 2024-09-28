@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
-import "./globals.css";
-import '@mantine/core/styles.css';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
-
-import Footer from "./_layouts/footer";
+import '@mantine/core/styles.css';
 import "./globals.css";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
+
+import theme from '@/app/_constants/customTheme';
+import Footer from "@/app/_layouts/footer";
 import Header from "@/app/_layouts/header";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -28,9 +28,10 @@ export default function RootLayout({
       </head>
       <body>
         <UserProvider>
-          <MantineProvider>
-            {children}
-            <Footer />
+         <MantineProvider theme={theme}>
+          <Header />
+          <main>{children}</main>
+          <Footer />
           </MantineProvider>
         </UserProvider>
       </body>
