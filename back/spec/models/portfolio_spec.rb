@@ -76,7 +76,7 @@ RSpec.describe Portfolio, type: :model do
   describe 'アソシエーション' do
     let!(:user) { FactoryBot.create(:user) }
     let!(:organization) { FactoryBot.create(:organization) }
-    let!(:portfolio) { FactoryBot.create(:portfolio, user:, organization:) }
+    let!(:portfolio) { FactoryBot.create(:portfolio, :with_picture, user:, organization:) }
 
     it 'userの削除時にportfolioをnulに設定' do
       user.destroy
@@ -86,6 +86,15 @@ RSpec.describe Portfolio, type: :model do
     it 'organizationの削除時にportfolioをnulに設定' do
       organization.destroy
       expect(portfolio.reload.organization).to be_nil
+    end
+
+    it '削除すると、関連するデータも削除されること' do
+      expect(Picture.where(imageable_type: 'Portfolio', imageable_id: portfolio.id).count).to eq 1
+
+      portfolio.destroy!
+
+      expect(Portfolio.where(id: portfolio.id).count).to eq 0
+      expect(Picture.where(imageable_type: 'Portfolio', imageable_id: portfolio.id).count).to eq 0
     end
 
     describe 'github_repository' do
