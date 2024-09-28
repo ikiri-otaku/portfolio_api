@@ -23,7 +23,7 @@ FactoryBot.define do
 
     trait :with_picture do
       after(:create) do |portfolio|
-        portfolio.pictures.create!(object_key: "portfolio/#{portfolio.id}/20240707183200.jpeg")
+        portfolio.pictures.create!(object_key: 'Portfolio/20240928/with_picture.jpeg')
       end
     end
 

@@ -70,7 +70,8 @@ class Portfolio < ApplicationRecord
       url:,
       introduction:,
       created_date: created_at.strftime('%Y/%m/%d'),
-      creator: organization&.name || user&.name
+      creator: organization&.name || user&.name,
+      pictures: pictures.map { |picture| "#{picture.imageable_type}/#{picture.object_key}" }
     }
   end
 end
