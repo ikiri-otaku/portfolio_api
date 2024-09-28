@@ -3,6 +3,7 @@ class Portfolio < ApplicationRecord
 
   belongs_to :user, optional: true
   belongs_to :organization, optional: true
+  has_many :pictures, as: :imageable, dependent: :destroy
   has_many :portfolio_teches, dependent: :destroy
   has_many :teches, through: :portfolio_teches
   has_one :github_repository, dependent: :destroy
@@ -13,6 +14,13 @@ class Portfolio < ApplicationRecord
     uniqueness: true,
     format: { with: URI::DEFAULT_PARSER.make_regexp(['http', 'https']) }
   validates :unhealthy_cnt, numericality: { only_integer: true, less_than_or_equal_to: 4, greater_than_or_equal_to: 0 }
+
+  scope :keyword_like, lambda { |keyword|
+    left_joins(:teches).where(
+      'LOWER(portfolios.name) LIKE :keyword OR LOWER(portfolios.introduction) LIKE :keyword OR LOWER(teches.name) LIKE :keyword',
+      keyword: "%#{keyword&.downcase}%"
+    ).distinct
+  }
 
   def github_url
     return unless github_repository
@@ -69,7 +77,8 @@ class Portfolio < ApplicationRecord
       url:,
       introduction:,
       created_date: created_at.strftime('%Y/%m/%d'),
-      creator: organization&.name || user&.name
+      creator: organization&.name || user&.name,
+      pictures: pictures.map { |picture| "#{picture.imageable_type}/#{picture.object_key}" }
     }
   end
 end

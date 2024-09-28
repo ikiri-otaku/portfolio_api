@@ -3,4 +3,5 @@ export type Portfolio = {
   name: string;
   url?: string;
   introduction?: string;
+  pictures: string[];
 }

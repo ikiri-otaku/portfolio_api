@@ -21,6 +21,12 @@ FactoryBot.define do
       end
     end
 
+    trait :with_picture do
+      after(:create) do |portfolio|
+        portfolio.pictures.create!(object_key: 'Portfolio/20240928/with_picture.jpeg')
+      end
+    end
+
     trait :with_tech do
       after(:create) do |portfolio|
         portfolio.teches << FactoryBot.create(:tech) if portfolio.teches.blank?
