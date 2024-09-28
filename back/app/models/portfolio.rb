@@ -15,6 +15,13 @@ class Portfolio < ApplicationRecord
     format: { with: URI::DEFAULT_PARSER.make_regexp(['http', 'https']) }
   validates :unhealthy_cnt, numericality: { only_integer: true, less_than_or_equal_to: 4, greater_than_or_equal_to: 0 }
 
+  scope :keyword_like, lambda { |keyword|
+    left_joins(:teches).where(
+      'LOWER(portfolios.name) LIKE :keyword OR LOWER(portfolios.introduction) LIKE :keyword OR LOWER(teches.name) LIKE :keyword',
+      keyword: "%#{keyword&.downcase}%"
+    ).distinct
+  }
+
   def github_url
     return unless github_repository
 

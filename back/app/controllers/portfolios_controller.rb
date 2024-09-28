@@ -9,8 +9,7 @@ class PortfoliosController < ApplicationController
   # キーワード検索
   # GET    /portfolios/search
   def search
-    portfolios = Portfolio.includes(:pictures).where('name LIKE ? OR introduction LIKE ?', "%#{params[:query]}%", "%#{params[:query]}%").limit(30)
-    # TODO: 検索対象項目
+    portfolios = Portfolio.includes(:pictures).keyword_like(params[:query]).limit(30)
     render status: :ok, json: portfolios.map(&:to_api_response)
   end
 end

@@ -106,9 +106,35 @@ RSpec.describe Portfolio, type: :model do
   end
 
   describe 'メソッド' do
+    # organization
     let(:organization) { FactoryBot.create(:organization, :with_user) }
     let(:user_with_org) { organization.users.first }
+    # user
     let(:user_no_org) { FactoryBot.create(:user) }
+
+    describe '.keyword_like' do
+      # tech
+      let!(:tech_ruby) { FactoryBot.create(:tech, name: 'Ruby') }
+      let!(:tech_keyword) { FactoryBot.create(:tech, name: 'tech_keyword') }
+      # portfolio
+      let!(:portfolio_1) { FactoryBot.create(:portfolio, name: 'xkeywordx') }
+      let!(:portfolio_2) { FactoryBot.create(:portfolio, introduction: 'xkeywordx') }
+      let!(:portfolio_3) { FactoryBot.create(:portfolio) }
+
+      before do
+        portfolio_2.teches << tech_ruby
+        portfolio_3.teches << tech_keyword
+      end
+
+      it 'keywordが指定されていない場合、全件取得できる' do
+        expect(Portfolio.keyword_like('').pluck(:id)).to eq [portfolio_1.id, portfolio_2.id, portfolio_3.id]
+      end
+
+      it 'keywordが指定された場合、一致した結果が取得できる' do
+        expect(Portfolio.keyword_like('KeyWord').pluck(:id)).to eq [portfolio_1.id, portfolio_2.id, portfolio_3.id]
+        expect(Portfolio.keyword_like('ruby').pluck(:id)).to eq [portfolio_2.id]
+      end
+    end
 
     describe '#github_url' do
       let(:portfolio) { FactoryBot.build(:portfolio) }
