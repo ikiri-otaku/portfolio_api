@@ -113,6 +113,7 @@ ja:
       odd: は奇数にしてください
       other_than: は%{count}以外の値にしてください
       present: は入力しないでください
+      repository_top: はリポジトリのトップページを指定してください
       required: を入力してください
       requires_authentication: リクエストヘッダにAuthorizationを設定してください
       taken: はすでに存在します
