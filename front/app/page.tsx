@@ -1,10 +1,13 @@
 import Submission from '@/app/_components/buttons/submission';
 import TestPostUI from '@/app/_services/testPost';
+import Link from 'next/link';
 
 export default function Home() {
   return (
     <div>
       <TestPostUI />
+      <Link href="/test_s3">S3 Test Page⇒</Link>
+
       <section className="flex flex-col items-center justify-center pb-14 pt-[86px]">
         <h2 className="text-center text-2xl font-black leading-snug text-textBlack">
           キャッチコピーキャッチコピー
