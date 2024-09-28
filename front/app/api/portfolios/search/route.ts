@@ -15,6 +15,7 @@ export async function GET(req: Request): Promise<Response> {
       headers: {
         'Content-Type': 'application/json',
       },
+      cache: 'no-cache',
     });
 
     const res = await response.json();
@@ -29,6 +30,6 @@ export async function GET(req: Request): Promise<Response> {
 
   } catch (error: any) {
     console.error(error);
-    return new Response(`Failed: ${error.message}`, {status: 500});
+    return new Response(`Failed: ${error.message}`, { status: 500 });
   }
 }

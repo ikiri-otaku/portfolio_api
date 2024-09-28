@@ -54,30 +54,27 @@ RSpec.describe 'Portfolios', type: :request do
       expect(response).to have_http_status :ok
       json = response.parsed_body
       expect(json.length).to eq 3
-      res_str = json.to_json
-      expect(res_str).to include portfolio_name_match.name
-      expect(res_str).to include portfolio_introduction_match.name
-      expect(res_str).to include portfolio_no_match.name
+      expect(json.dig(0, 'name')).to eq portfolio_name_match.name
+      expect(json.dig(0, 'pictures', 0)).to eq "Portfolio/#{portfolio_name_match.pictures.first.object_key}"
+      expect(json.dig(1, 'name')).to eq portfolio_introduction_match.name
+      expect(json.dig(2, 'name')).to eq portfolio_no_match.name
     end
     it 'クエリパラメータが空の場合、全件を返す' do
       get search_portfolios_path(query: '')
       expect(response).to have_http_status :ok
       json = response.parsed_body
       expect(json.length).to eq 3
-      res_str = json.to_json
-      expect(res_str).to include portfolio_name_match.name
-      expect(res_str).to include portfolio_introduction_match.name
-      expect(res_str).to include portfolio_no_match.name
+      expect(json.dig(0, 'name')).to eq portfolio_name_match.name
+      expect(json.dig(1, 'name')).to eq portfolio_introduction_match.name
+      expect(json.dig(2, 'name')).to eq portfolio_no_match.name
     end
     it 'クエリパラメータが指定された場合、name または introduction がマッチする結果を返す' do
       get search_portfolios_path(query: 'xxx')
       expect(response).to have_http_status :ok
       json = response.parsed_body
       expect(json.length).to eq 2
-      res_str = json.to_json
-      expect(res_str).to include portfolio_name_match.name
-      expect(res_str).to include portfolio_introduction_match.name
-      expect(res_str).not_to include portfolio_no_match.name
+      expect(json.dig(0, 'name')).to eq portfolio_name_match.name
+      expect(json.dig(1, 'name')).to eq portfolio_introduction_match.name
     end
   end
 end
