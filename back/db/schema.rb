@@ -11,6 +11,15 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2024_07_07_091732) do
+  create_table "github_repositories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "portfolio_id", null: false
+    t.string "owner", limit: 50, null: false
+    t.string "repo", limit: 100, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["portfolio_id"], name: "index_github_repositories_on_portfolio_id", unique: true
+  end
+
   create_table "organization_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.bigint "user_id", null: false
@@ -36,6 +45,31 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_07_091732) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["imageable_type", "imageable_id"], name: "index_pictures_on_imageable"
+  end
+
+  create_table "portfolio_teches", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "portfolio_id", null: false
+    t.bigint "tech_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["portfolio_id", "tech_id"], name: "index_portfolio_teches_on_portfolio_id_and_tech_id", unique: true
+    t.index ["portfolio_id"], name: "index_portfolio_teches_on_portfolio_id"
+    t.index ["tech_id"], name: "index_portfolio_teches_on_tech_id"
+  end
+
+  create_table "portfolios", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "organization_id"
+    t.string "name", limit: 50, null: false
+    t.string "url", null: false
+    t.text "introduction"
+    t.integer "unhealthy_cnt", limit: 1, default: 0
+    t.datetime "latest_health_check_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_portfolios_on_organization_id"
+    t.index ["url"], name: "index_portfolios_on_url", unique: true
+    t.index ["user_id"], name: "index_portfolios_on_user_id"
   end
 
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -95,8 +129,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_07_091732) do
     t.index ["github_username"], name: "index_users_on_github_username", unique: true
   end
 
+  add_foreign_key "github_repositories", "portfolios"
   add_foreign_key "organization_users", "organizations"
   add_foreign_key "organization_users", "users"
+  add_foreign_key "portfolio_teches", "portfolios"
+  add_foreign_key "portfolio_teches", "teches"
+  add_foreign_key "portfolios", "organizations"
+  add_foreign_key "portfolios", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "teches", "teches", column: "parent_id"
   add_foreign_key "user_teches", "teches"
