@@ -1,6 +1,6 @@
+import Link from 'next/link';
 import Submission from '@/app/_components/buttons/submission';
 import TestPostUI from '@/app/_services/testPost';
-import Link from 'next/link';
 
 export default function Home() {
   return (
