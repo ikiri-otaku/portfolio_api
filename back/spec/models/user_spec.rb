@@ -49,8 +49,10 @@ RSpec.describe User, type: :model do
     let!(:organization) { FactoryBot.create(:organization) }
     let!(:user) { FactoryBot.create(:user) }
     let!(:portfolio) { FactoryBot.create(:portfolio, user:, organization:) }
+
     before do
       user.organizations << organization
+      user.portfolios << portfolio
     end
 
     it 'organizationに関連付けられていること' do
@@ -67,6 +69,12 @@ RSpec.describe User, type: :model do
       user.destroy
       expect(OrganizationUser.where(user_id: user.id).count).to eq 0
       expect(Organization.where(id: organization.id).count).to eq 1
+    end
+
+    it 'userが削除された場合portfolioの関連付けが削除される' do
+      user.destroy
+      expect(Portfolio.where(user_id: user.id).count).to eq 0
+      expect(Portfolio.where(id: portfolio.id).count).to eq 1
     end
   end
 end

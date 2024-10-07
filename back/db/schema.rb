@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema[7.1].define(version: 2024_07_07_091732) do
   create_table "github_repositories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "portfolio_id", null: false
@@ -18,6 +19,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_07_091732) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["portfolio_id"], name: "index_github_repositories_on_portfolio_id", unique: true
+  end
+
+  create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "portfolio_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_likes_on_discarded_at"
+    t.index ["portfolio_id"], name: "index_likes_on_portfolio_id"
+    t.index ["user_id", "portfolio_id"], name: "index_likes_on_user_id_and_portfolio_id", unique: true
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "organization_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -130,6 +143,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_07_091732) do
   end
 
   add_foreign_key "github_repositories", "portfolios"
+  add_foreign_key "likes", "portfolios"
+  add_foreign_key "likes", "users"
   add_foreign_key "organization_users", "organizations"
   add_foreign_key "organization_users", "users"
   add_foreign_key "portfolio_teches", "portfolios"
