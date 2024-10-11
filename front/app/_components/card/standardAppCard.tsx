@@ -5,11 +5,11 @@ import UserButton from '@/app/_components/buttons/userButton';
 export default function StandardAppCard() {
   return (
     <Card shadow="sm" padding="sm" radius="md" withBorder >
-      <Group justify="space-between" style={{ width: '100%' }}>
+      <Group>
         <Text fw={700} size="lg">
           アプリタイトル
         </Text>
-        <div style={{ marginLeft: 'auto' }}>
+        <div className='ml-auto'>
           <BookmarkIcon width='18px' height='18px' />
         </div>
       </Group>
@@ -18,7 +18,7 @@ export default function StandardAppCard() {
         <div>
           icon表示するとこ
         </div>
-        <div style={{ marginLeft: 'auto' }}>
+        <div className='ml-auto'>
           <UserButton />  
         </div>
       </Group>
